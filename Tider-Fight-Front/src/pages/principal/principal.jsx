@@ -1,4 +1,4 @@
-import "./principal.css";
+// import "./principal.css";
 export function Principal() {
   const modalidade = ["Jiu Jitsu", "MMA"];
 

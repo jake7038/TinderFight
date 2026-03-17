@@ -1,13 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 
-import "./login.css";
+//import "./TelaInicial.css";
 
 export function TelaInicial() {
   const nav = useNavigate();
 
   const goHome = () => {
-    nav("/lutadores");
+    nav("/tela-principal");
+  };
+
+  const goCadastro = () => {
+    nav("/cadastro");
+  };
+
+  const goLogin = () => {
+    nav("/login");
   };
 
   return (
@@ -26,9 +34,13 @@ export function TelaInicial() {
             <button className="btn primary" onClick={goHome}>
               Entre na Arena
             </button>
-            <button className="btn secondary">Login</button>
+            <button className="btn secondary" onClick={goLogin}>
+              Login
+            </button>
           </div>
-          <button className="btn secondary">Cadastre-se Agora</button>
+          <button className="btn secondary" onClick={goCadastro}>
+            Cadastre-se Agora
+          </button>
         </div>
       </div>
     </div>
