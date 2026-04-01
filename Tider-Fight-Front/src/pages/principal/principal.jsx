@@ -1,7 +1,11 @@
 import "./principal.css"
-export function Principal() {
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
-    const modalidade = ['Jiu Jitsu', 'MMA']
+export function Principal() { 
+    
+    const lutador = useSelector(state => state.lutador.lutador)
+    
 
     return(
         <div className="principal">
@@ -11,12 +15,11 @@ export function Principal() {
                 <img src="/Map.png" alt="" />
             </header>
             <div className="card">
-                    <h2 className="name">Charles do Bronx</h2>
+                    <h2 className="name">{lutador.nome}</h2>
                     <div className="place_fighter">
-                        <img src="/pontogps.png" alt="" />
-                        <p>Guarujá, SP</p>
+                        <p> <img src="/pontogps.png" alt="" /> {lutador.cidade}, {lutador.estado}</p>
                         <div className="category">
-                            {modalidade.map(mod => (
+                            {lutador.modalidade.map(mod => (
                             <p key={mod}>{mod}</p>
                             ))}
                         </div>
