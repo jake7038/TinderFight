@@ -1,11 +1,14 @@
 import "./principal.css"
-import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-
+import { useAppDispatch } from "../../redux/hookers"
+import { useAppSelector } from "../../redux/hookers"
+import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
 export function Principal() { 
     
-    const lutador = useSelector(state => state.lutador.lutador)
-    
+    const dispatch = useAppDispatch()
+    const lutador = useAppSelector(state => {
+        const lutadores = lutadoresSelectors.selectAll(state)
+        return lutadores[0]
+    })
 
     return(
         <div className="principal">
@@ -14,17 +17,23 @@ export function Principal() {
                 <img className="imagem_header" src="src/assets/Choose your fighter in flames 1.png" alt="" />
                 <img src="/Map.png" alt="" />
             </header>
-            <div className="card">
-                    <h2 className="name">{lutador.nome}</h2>
-                    <div className="place_fighter">
-                        <p> <img src="/pontogps.png" alt="" /> {lutador.cidade}, {lutador.estado}</p>
-                        <div className="category">
-                            {lutador.modalidade.map(mod => (
-                            <p key={mod}>{mod}</p>
-                            ))}
+            <div className="card" style={{backgroundImage: lutador?.img ? `url(${lutador.img})` : 'none' }} >
+
+                {!lutador ? (
+                    <p className="carregando">Encontrando os melhores lutadores na sua área <span className="dots"></span> </p>
+                ) : (<>
+                            <h2 className="name">{lutador.nome}</h2>
+                        <div className="place_fighter">
+                            <p> <img src="/pontogps.png" alt="" /> {lutador.cidade}, {lutador.estado}</p>
+                            <div className="category">
+                                {lutador.modalidade.map(mod => (
+                                <p key={mod}>{mod}</p>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    
+                    </>
+                )}
+            
             </div>
             
             <div className="choice">
