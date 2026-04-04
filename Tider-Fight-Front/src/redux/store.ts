@@ -1,9 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit'
 import lutadorReducer from './slices/lutadorSlice'
+import ususarioReducer from './slices/usuarioSlice'
+import conversasReducer from './slices/conversasSlice'
+import mensagemReducer from './slices/mensagemSlice'
 
 export const store = configureStore({
     reducer: {
-        lutadores: lutadorReducer
+        lutadores: lutadorReducer,
+        usuario: ususarioReducer,
+        conversas: conversasReducer,
+        mensagem: mensagemReducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>

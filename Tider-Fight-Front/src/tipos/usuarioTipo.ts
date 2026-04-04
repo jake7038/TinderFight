@@ -1,9 +1,10 @@
-export type usuario = {
+export type Usuario = {
     id: number,
-    nome: string,
     img: string,
+    nome: string,
     cidade: string,
     estado: string,
-    modalidade: string[],
+    modalidade: string[]
     peso: number
 }
+
