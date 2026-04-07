@@ -7,7 +7,30 @@ const conversasAdapter = createEntityAdapter<Conversas, number>({
     sortComparer: (a, b) => b.date.getTime() - a.date.getTime()
 })
 
-const initialState = conversasAdapter.getInitialState()
+
+const initialState = conversasAdapter.setAll(
+    conversasAdapter.getInitialState(),
+    [   
+        {
+            id: 1,
+            usuarioId: 1,
+            lastMessage: "vlw pai",
+            matchId: 2,
+            matchNome: "charle",
+            date: new Date(),
+            image: "./charles.png"
+        },
+        {
+            id: 2,
+            usuarioId: 1,
+            lastMessage: "Vamo marcar sim!",
+            matchId: 3,
+            matchNome: "marcus",
+            date: new Date(),
+            image: "./charles.png"
+        }
+    ]
+)
 
 const conversasSlice = createSlice({
     name: 'conversas',

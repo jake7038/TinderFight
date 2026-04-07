@@ -1,14 +1,24 @@
-import "./principal.css"
+import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from "../../redux/hookers"
 import { useAppSelector } from "../../redux/hookers"
 import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
+import "./principal.css"
+
 export function Principal() { 
     
     const dispatch = useAppDispatch()
+    const nav = useNavigate()
+
+    const goConversas = () => {
+    
+    nav("/conversas")
+    }
+
     const lutador = useAppSelector(state => {
         const lutadores = lutadoresSelectors.selectAll(state)
         return lutadores[0]
     })
+
 
     return(
         <div className="principal">
@@ -59,7 +69,7 @@ export function Principal() {
                     </div>
                     
                     <div>
-                        <img src="/chat.png" alt="" />
+                        <img src="/chat.png" alt="" onClick={ goConversas} />
                         <p>Chat</p>
                     </div>
                     
@@ -68,11 +78,7 @@ export function Principal() {
                         <p>Perfil do Lutador</p>
                     </div>
 
-                    <div>
-                        <img src="/historico.png" alt="" />
-                        <p>Histórico</p>
                     
-                    </div>
                 
                 </div>
             </footer>
