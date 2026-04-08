@@ -45,12 +45,12 @@ export default function Chat() {
                     <div className="message-bubble">{msg.text}</div>
                 </div>
             ))}
-      </div>
+        </div>
 
-      <div className="chat-input">
-        <input placeholder="Digite uma mensagem..." />
-        <button>Enviar</button>
-      </div>
+        <div className="chat-input">
+            <input placeholder="Digite uma mensagem..." />
+            <button>Enviar</button>
+        </div>
     </div>
-  );
+    );
 }

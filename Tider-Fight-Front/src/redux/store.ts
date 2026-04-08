@@ -9,7 +9,7 @@ export const store = configureStore({
         lutadores: lutadorReducer,
         usuario: ususarioReducer,
         conversas: conversasReducer,
-        mensagem: mensagemReducer
+        mensagens: mensagemReducer
     }
 })
 export type RootState = ReturnType<typeof store.getState>

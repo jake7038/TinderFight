@@ -1,0 +1,337 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap");
+
+/* ── Overlay ─────────────────────────────────────── */
+.sm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* ── Modal container ─────────────────────────────── */
+.sm-modal {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 380px;
+  overflow: hidden;
+  font-family: "Barlow", sans-serif;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+/* ── Header ──────────────────────────────────────── */
+.sm-header {
+  background: #111;
+  padding: 1.2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #2a2a2a;
+  flex-shrink: 0;
+}
+
+.sm-title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 22px;
+  color: #ffffff;
+  letter-spacing: 2px;
+  margin: 0;
+  font-weight: 400;
+}
+
+.sm-close {
+  width: 32px;
+  height: 32px;
+  background: #2a2a2a;
+  border: none;
+  border-radius: 50%;
+  color: #aaa;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.2s;
+  line-height: 1;
+}
+
+.sm-close:hover {
+  background: #e02020;
+  color: #ffffff;
+}
+
+/* ── Tabs ────────────────────────────────────────── */
+.sm-tabs {
+  display: flex;
+  border-bottom: 1px solid #2a2a2a;
+  background: #111;
+  flex-shrink: 0;
+}
+
+.sm-tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #555;
+  cursor: pointer;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font-family: "Barlow", sans-serif;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.sm-tab:hover {
+  color: #aaa;
+}
+
+.sm-tab--active {
+  color: #e02020;
+  border-bottom-color: #e02020;
+}
+
+/* ── Scrollable body ─────────────────────────────── */
+.sm-body {
+  padding: 1.25rem 1.5rem;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.sm-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Section label ───────────────────────────────── */
+.sm-section-label {
+  font-size: 10px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #e02020;
+  margin: 1rem 0 10px;
+  font-weight: 600;
+}
+
+.sm-panel > .sm-section-label:first-child {
+  margin-top: 0;
+}
+
+/* ── Toggle rows ─────────────────────────────────── */
+.sm-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #222;
+}
+
+.sm-toggle-row:last-of-type {
+  border-bottom: none;
+}
+
+.sm-toggle-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.sm-toggle-name {
+  font-size: 14px;
+  color: #dddddd;
+  font-weight: 500;
+}
+
+.sm-toggle-desc {
+  font-size: 11px;
+  color: #555;
+}
+
+/* ── Toggle switch ───────────────────────────────── */
+.sm-switch {
+  width: 42px;
+  height: 24px;
+  background: #2a2a2a;
+  border: none;
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-left: 12px;
+  transition: background 0.2s;
+  padding: 0;
+}
+
+.sm-switch::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border-radius: 50%;
+  top: 3px;
+  left: 3px;
+  transition: left 0.2s;
+}
+
+.sm-switch--on {
+  background: #e02020;
+}
+
+.sm-switch--on::after {
+  left: 21px;
+}
+
+/* ── Tags ────────────────────────────────────────── */
+.sm-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 0.5rem;
+}
+
+.sm-tag {
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid #2a2a2a;
+  font-size: 12px;
+  color: #888;
+  cursor: pointer;
+  background: transparent;
+  font-family: "Barlow", sans-serif;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.sm-tag:hover {
+  border-color: #555;
+  color: #ccc;
+}
+
+.sm-tag--active {
+  background: #e02020;
+  border-color: #e02020;
+  color: #ffffff;
+}
+
+.sm-tag--active:hover {
+  background: #c01818;
+  border-color: #c01818;
+  color: #ffffff;
+}
+
+/* ── Range slider ────────────────────────────────── */
+.sm-range-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.75rem;
+}
+
+.sm-range-label {
+  font-size: 12px;
+  color: #888;
+  min-width: 70px;
+}
+
+.sm-range {
+  flex: 1;
+  accent-color: #e02020;
+  cursor: pointer;
+}
+
+.sm-range-val {
+  font-size: 13px;
+  color: #e02020;
+  font-weight: 600;
+  min-width: 42px;
+  text-align: right;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+.sm-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #2a2a2a;
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.sm-btn-cancel {
+  background: transparent;
+  color: #666;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: "Barlow", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.sm-btn-cancel:hover {
+  border-color: #555;
+  color: #aaa;
+}
+
+.sm-btn-save {
+  flex: 1;
+  background: #e02020;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 16px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sm-btn-save:hover {
+  background: #c01818;
+}
+
+.sm-btn-save:active {
+  background: #a01414;
+}
+
+
+.sm-center-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0.5rem;
+    justify-content: center;
+    }
+
+.sm-btn-excluir{
+    justify-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #9e3232;
+    color: #ffffff;
+    padding: 10px;
+    font-family: "Bebas Neue", sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sm-btn-excluir:hover {
+    background: #c01818;
+}
+
+
+

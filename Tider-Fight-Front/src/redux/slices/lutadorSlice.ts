@@ -2,7 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { Lutador } from '../../tipos/lutadorTipo'
 import { RootState } from '../store'
 
-const lutadoresAdapter = createEntityAdapter<Lutador, number>({
+const lutadoresAdapter = createEntityAdapter<Lutador, string>({
     selectId: (lutador) =>  lutador.id
 })
 
@@ -10,7 +10,8 @@ const initialState = lutadoresAdapter.setAll(
     lutadoresAdapter.getInitialState(),
     [   
         {
-            id: 1,
+            id: "1",
+            userId: "1",
             img: "/charles.png",
             nome: "Charles do Bronx",
             cidade: "Guarujá",
@@ -20,7 +21,8 @@ const initialState = lutadoresAdapter.setAll(
         }
         ,
         {
-            id: 2,
+            id: "2",
+            userId:"2",
             img: "/charles.png",
             nome: "Maycom stevão",
             cidade: "Madureira",

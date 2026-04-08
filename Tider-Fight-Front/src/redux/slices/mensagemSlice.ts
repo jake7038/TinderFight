@@ -2,7 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { Mensagem } from '../../tipos/mensagemTipo'
 import { RootState } from '../store'
 
-const mensagensAdapter = createEntityAdapter<Mensagem, number>({
+const mensagensAdapter = createEntityAdapter<Mensagem, string>({
     selectId: (m: Mensagem) => m.id,
     sortComparer: (a, b) => a.time.getTime() - b.time.getTime()
 })

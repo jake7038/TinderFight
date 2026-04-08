@@ -1,8 +1,8 @@
 export type Conversas = {
-    id: number,
-    usuarioId: number,
+    id: string,
+    usuarioId: string,
     lastMessage: string,
-    matchId: number,
+    matchId: string,
     matchNome: string,
     date: Date,
     image: string
