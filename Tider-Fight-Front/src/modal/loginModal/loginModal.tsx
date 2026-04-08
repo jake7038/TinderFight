@@ -10,19 +10,23 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({
     isOpen,
-    onClose,
     onLogin,
     onRegister,
+    onClose
 }) => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
-    if (!isOpen) return null;
+    
 
     const handleSubmit = (e: React.SubmitEvent) => { 
         e.preventDefault();
         onLogin(email, password);
     };
+
+    
+
+    if (!isOpen) return null;
 
 return (
     <div className="lm-overlay" onClick={onClose}>
@@ -76,16 +80,11 @@ return (
             </button>
 
             <div className="lm-divider">
-            <span>ou</span>
+                <button className="lm-btn-secondary" type="button" onClick={onClose}>
+                    Voltar
+                </button>
             </div>
 
-            <button
-            className="lm-btn-secondary"
-            type="button"
-            onClick={onRegister}
-            >
-            Criar conta de lutador
-            </button>
         </form>
 
 

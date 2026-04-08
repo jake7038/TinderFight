@@ -1,8 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import "./chat.css";
+
 
 export default function Chat() {
 
+    const nav = useNavigate()
+
+    const GoConversa = () =>{
+        nav("/conversas")
+    }
     const messages = [
     {
         id: 1,
@@ -26,7 +33,7 @@ export default function Chat() {
             <img className="avatar" src="/charles.png" />
             <span>Charles do Bronx</span>
             </div>
-            <div className="menu">☰</div>
+            <div className="menu" onClick={GoConversa}>☰</div>
         </div>
 
         <div className="chat-body">
