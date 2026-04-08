@@ -45,6 +45,10 @@ function Conversa  () {
     nav("/lutadores")
     }
 
+    const GoChat = () => {
+        nav("/chat")
+    }
+
     const conversas = useSelector(conversasSelectors.selectAll);
     const [search, setSearch] = useState("");
 
@@ -71,7 +75,7 @@ function Conversa  () {
             <div className="cl-empty">Nenhuma conversa encontrada</div>
             )}
             {filtered.map((conversa, i) => (
-            <button
+            <button onClick={GoChat}
                 key={conversa.id}
                 className="cl-item"
                 style={{ animationDelay: `${i * 60}ms` }}

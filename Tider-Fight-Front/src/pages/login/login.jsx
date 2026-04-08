@@ -7,6 +7,10 @@ export function Login(){
     const nav = useNavigate()
     const [showModal, setShowModal] = useState(false);
 
+    const goPrincipal = () => {
+        nav("/lutadores")
+    }
+
     return(
         <div className="login-container">
             <div className="overlay">
@@ -16,11 +20,11 @@ export function Login(){
 
                     <div className="buttons">
                         <button className="btn primary" onClick={() => setShowModal(true)} >Entre na Arena</button>
-                        <button className="btn secondary">Cadastre Agora</button>
+                        <button className="btn secondary" onClick={goPrincipal}>Cadastre Agora</button>
                     </div>
                 </div>
             </div>
-            <LoginModal isOpen={showModal} onClose={() => setShowLogin(false)}
+            <LoginModal isOpen={showModal} onClose={() => setShowModal(false)}
         onLogin={(email, password) => {
             console.log(email, password);
             setShowLogin(false);
