@@ -1,15 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import LoginModal from '../../modal/loginModal/loginModal'
+import CadastraModal from '../../modal/cadastraModal/cadastraModal'
 import { useState } from 'react'
 import './login.css'
 
 export function Login(){
-    const nav = useNavigate()
-    const [showModal, setShowModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [showCadastraModal, setShowCadastraModal] = useState(false);
 
-    const goPrincipal = () => {
-        nav("/lutadores")
-    }
+    
 
     return(
         <div className="login-container">
@@ -19,18 +18,14 @@ export function Login(){
                     <img src="src/assets/Fighting_spirit_in_flames-removebg-preview 1.png" alt="Tinder da Luta" className="logo"/>
 
                     <div className="buttons">
-                        <button className="btn primary" onClick={() => setShowModal(true)} >Entre na Arena</button>
-                        <button className="btn secondary" onClick={goPrincipal}>Cadastre Agora</button>
+                        <button className="btn primary" onClick={() => setShowLoginModal(true)} >Entre na Arena</button>
+                        <button className="btn secondary" onClick={() => setShowCadastraModal(true)}>Cadastre Agora</button>
                     </div>
                 </div>
             </div>
-            <LoginModal isOpen={showModal} onClose={() => setShowModal(false)}
-        onLogin={(email, password) => {
-            console.log(email, password);
-            setShowLogin(false);
-        }}
-        onRegister={() => console.log("cadastro")}
-        />
+            <LoginModal isOpen={showLoginModal} onClose={() => setShowLoginModal(false)}/>
+            <CadastraModal isOpen={showCadastraModal} onClose={() => setShowCadastraModal(false)} />
+            
         </div>
     )
 }

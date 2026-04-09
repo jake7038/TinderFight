@@ -1,31 +1,31 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hookers";
-import { fetchUsuario } from "../../redux/requisicoes/usuarioThunk";
-import './loginModal.css'
+import { criarUsuario } from "../../redux/requisicoes/usuarioThunk";
+import './cadastraModal.css'
 
-interface LoginModalProps {
+interface CadastraModalProps {
     isOpen: boolean;
     onClose: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({
+const CadastraModal: React.FC<CadastraModalProps> = ({
     isOpen,
     onClose
 }) => {
     const [email, setEmail] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [senha, setSenha] = useState<string>("");
 
-    const nav = useNavigate()
-    const dispatch = useAppDispatch()
     
+    const dispatch = useAppDispatch()
 
-    const handleSubmit = async (e: React.SubmitEvent) => { 
+    
+    const handleSubmit = (e: React.SubmitEvent) => { 
         e.preventDefault();
-        const result = await dispatch(fetchUsuario({ email, senha: password }))
-        if (fetchUsuario.fulfilled.match(result)) 
-            nav("/lutadores")
+        dispatch(criarUsuario({ email, senha}))
     };
+
+
+    
 
     if (!isOpen) return null;
 
@@ -47,7 +47,7 @@ return (
             <h1 className="lm-logo">
             Choose Your <span>Fighter</span>
             </h1>
-            <p className="lm-subtitle">Entre na arena</p>
+            <p className="lm-subtitle">Cria sua conta</p>
         </div>
 
         <form className="lm-body" onSubmit={handleSubmit}>
@@ -71,8 +71,8 @@ return (
                 className="lm-input"
                 type="password"
                 placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={senha}
+                onChange={(e) => setSenha(e.target.value)}
                 required
             />
             </div>
@@ -95,4 +95,4 @@ return (
 );
 };
 
-export default LoginModal;
+export default CadastraModal;

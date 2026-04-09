@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Usuario } from '../../tipos/usuarioTipo'
+import { fetchUsuario, criarUsuario, deletarUsuario, atualizarUsuario  } from '../requisicoes/usuarioThunk'
+
 
 const initialState: Usuario | null = null
 
@@ -20,7 +22,28 @@ const usuarioSlice = createSlice({
         logout: () => {
         return null
         }
+    },
+    extraReducers: (builder) => {
+        builder
+
+        .addCase(fetchUsuario.fulfilled, (state, action) => {
+            return action.payload
+        })
+
+        .addCase(criarUsuario.fulfilled, (state, action) => {
+            return action.payload
+        })
+
+        .addCase(deletarUsuario.fulfilled, (state, action) => {
+            return null
+        })
+
+        .addCase(atualizarUsuario.fulfilled, (state, action) => {
+        return action.payload
+        })
+
     }
+
 })
 
 export const { setUsuario, alterarUsuario, logout } = usuarioSlice.actions

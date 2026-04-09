@@ -1,6 +1,7 @@
 export type Lutador = {
-    id: number,
+    id: string,
     img: string,
+    userId: string,
     nome: string,
     cidade: string,
     estado: string,

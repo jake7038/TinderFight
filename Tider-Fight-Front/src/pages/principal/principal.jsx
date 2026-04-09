@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from "../../redux/hookers"
 import { useAppSelector } from "../../redux/hookers"
 import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
+import { useState } from 'react'
+import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
 
 export function Principal() { 
@@ -19,6 +21,10 @@ export function Principal() {
         return lutadores[0]
     })
 
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const openModal = () => setIsModalOpen(true)
+    const closeModal = () => setIsModalOpen(false)
 
     return(
         <div className="principal">
@@ -68,12 +74,12 @@ export function Principal() {
                         <p>Swap</p>
                     </div>
                     
-                    <div>
-                        <img src="/chat.png" alt="" onClick={ goConversas} />
+                    <div onClick={ goConversas} >
+                        <img src="/chat.png" alt=""  />
                         <p>Chat</p>
                     </div>
                     
-                    <div>
+                    <div onClick={openModal}>
                         <img src="/lutador.png" alt="" />
                         <p>Perfil do Lutador</p>
                     </div>
@@ -82,6 +88,8 @@ export function Principal() {
                 
                 </div>
             </footer>
+                
+            <UserModal isOpen={isModalOpen} onClose={closeModal} onSave={() => null}></UserModal>
 
         </div>
 
