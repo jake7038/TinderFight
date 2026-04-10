@@ -19,7 +19,10 @@
       "nome": "Maycom",
       "cidade": "Rio de Janeiro",
       "estado": "RJ",
-      "modalidade": ["MMA", "Capoeira"],
+      "modalidade": [
+        "MMA",
+        "Capoeira"
+      ],
       "peso": "92kg"
     },
     {
@@ -29,7 +32,10 @@
       "nome": "Charle",
       "cidade": "Rio de Janeiro",
       "estado": "RJ",
-      "modalidade": ["MMA", "Capoeira"],
+      "modalidade": [
+        "MMA",
+        "Capoeira"
+      ],
       "peso": "92kg"
     }
   ],
@@ -39,7 +45,9 @@
       "userId": "1",
       "cidade": "Rio de Janeiro",
       "estado": "RJ",
-      "modalidade": ["Boxe"],
+      "modalidade": [
+        "Boxe"
+      ],
       "pesoMin": 80,
       "pesoMax": 98
     }

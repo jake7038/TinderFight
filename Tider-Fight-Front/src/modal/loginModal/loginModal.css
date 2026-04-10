@@ -1,0 +1,191 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;500;600&display=swap");
+
+.lm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+/* ── Modal container ─────────────────────────────── */
+.lm-modal {
+  background: #1a1a1a;
+  border: 1px solid #2a2a2a;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 360px;
+  overflow: hidden;
+  font-family: "Barlow", sans-serif;
+}
+
+/* ── Header ──────────────────────────────────────── */
+.lm-header {
+  background: #111;
+  padding: 1.5rem 1.5rem 1rem;
+  text-align: center;
+  border-bottom: 1px solid #2a2a2a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.lm-icon {
+  width: 36px;
+  height: 36px;
+  margin-bottom: 4px;
+}
+
+.lm-logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  color: #ffffff;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin: 0;
+  font-weight: 400;
+}
+
+.lm-logo span {
+  color: #e02020;
+}
+
+.lm-subtitle {
+  font-size: 11px;
+  color: #666;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ── Body / Form ─────────────────────────────────── */
+.lm-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.lm-field-group {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lm-label {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.lm-input {
+  width: 100%;
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #ffffff;
+  font-family: "Barlow", sans-serif;
+  font-size: 14px;
+  box-sizing: border-box;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.lm-input:focus {
+  border-color: #e02020;
+}
+
+.lm-input::placeholder {
+  color: #444;
+}
+
+/* ── Buttons ─────────────────────────────────────── */
+.lm-btn-primary {
+  width: 100%;
+  background: #e02020;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 18px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 0.25rem;
+  transition: background 0.2s;
+}
+
+.lm-btn-primary:hover {
+  background: #c01818;
+}
+
+.lm-btn-primary:active {
+  background: #a01414;
+}
+
+.lm-btn-secondary {
+  width: 100%;
+  background: transparent;
+  color: #aaa;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 10px;
+  font-family: "Barlow", sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.lm-btn-secondary:hover {
+  border-color: #e02020;
+  color: #ffffff;
+}
+
+/* ── Divider ─────────────────────────────────────── */
+.lm-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1rem 0;
+  color: #444;
+  font-size: 12px;
+}
+
+.lm-divider::before,
+.lm-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #2a2a2a;
+}
+
+/* ── Footer ──────────────────────────────────────── */
+.lm-footer {
+  padding: 1rem 1.5rem;
+  text-align: center;
+  border-top: 1px solid #2a2a2a;
+  font-size: 12px;
+  color: #555;
+}
+
+.lm-link {
+  background: none;
+  border: none;
+  color: #e02020;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: "Barlow", sans-serif;
+  padding: 0;
+  text-decoration: none;
+}
+
+.lm-link:hover {
+  text-decoration: underline;
+}
