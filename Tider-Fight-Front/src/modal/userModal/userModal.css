@@ -143,7 +143,6 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  flex: 1;
 }
 
 .sm-toggle-name {
@@ -159,15 +158,14 @@
 
 /* ── Toggle switch ───────────────────────────────── */
 .sm-switch {
-  width: 42px;
-  height: 24px;
+  width: 60px;      
+  height: 32px;     
   background: #2a2a2a;
   border: none;
-  border-radius: 12px;
+  border-radius: 16px;
   position: relative;
   cursor: pointer;
   flex-shrink: 0;
-  margin-left: 12px;
   transition: background 0.2s;
   padding: 0;
 }
@@ -175,12 +173,12 @@
 .sm-switch::after {
   content: "";
   position: absolute;
-  width: 18px;
-  height: 18px;
+  width: 24px;      
+  height: 24px;     
   background: #ffffff;
   border-radius: 50%;
-  top: 3px;
-  left: 3px;
+  top: 4px;         
+  left: 4px;        
   transition: left 0.2s;
 }
 
@@ -189,7 +187,7 @@
 }
 
 .sm-switch--on::after {
-  left: 21px;
+  left: 32px; 
 }
 
 /* ── Tags ────────────────────────────────────────── */
@@ -322,6 +320,7 @@
     background: #9e3232;
     color: #ffffff;
     padding: 10px;
+    margin-top: 10px;
     font-family: "Bebas Neue", sans-serif;
     font-size: 12px;
     letter-spacing: 2px;
