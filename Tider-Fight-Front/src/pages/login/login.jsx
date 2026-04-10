@@ -8,8 +8,6 @@ export function Login(){
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showCadastraModal, setShowCadastraModal] = useState(false);
 
-    
-
     return(
         <div className="login-container">
             <div className="overlay">

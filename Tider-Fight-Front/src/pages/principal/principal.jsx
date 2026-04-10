@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from "../../redux/hookers"
 import { useAppSelector } from "../../redux/hookers"
 import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
-import { useState } from 'react'
+import { fetchLutadores } from '../../redux/requisicoes/lutadorThunk'
+import { useState, useEffect } from 'react'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
 
@@ -10,6 +11,7 @@ export function Principal() {
     
     const dispatch = useAppDispatch()
     const nav = useNavigate()
+    const usuario = useAppSelector(state => state.usuario)
 
     const goConversas = () => {
     
@@ -25,6 +27,10 @@ export function Principal() {
 
     const openModal = () => setIsModalOpen(true)
     const closeModal = () => setIsModalOpen(false)
+
+    useEffect(() => {
+    dispatch(fetchLutadores(usuario.id))
+    }, [dispatch])
 
     return(
         <div className="principal">
