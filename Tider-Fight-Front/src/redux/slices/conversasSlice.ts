@@ -1,36 +1,14 @@
 import { createSlice, createEntityAdapter, PayloadAction } from '@reduxjs/toolkit'
 import { Conversas } from '../../tipos/conversasTipo'
 import { RootState } from '../store'
+import { getConversas, criarConversa, deletarConversa, editarConversa } from '../requisicoes/conversasThunk'
 
 const conversasAdapter = createEntityAdapter<Conversas, string>({
     selectId: (c) => c.id,
     sortComparer: (a, b) => b.date.getTime() - a.date.getTime()
 })
 
-
-const initialState = conversasAdapter.setAll(
-    conversasAdapter.getInitialState(),
-    [   
-        {
-            id: "1",
-            usuarioId: "1",
-            lastMessage: "vlw pai",
-            matchId: "2",
-            matchNome: "charle",
-            date: new Date(),
-            image: "./charles.png"
-        },
-        {
-            id: "2",
-            usuarioId: "1",
-            lastMessage: "Vamo marcar sim!",
-            matchId: "3",
-            matchNome: "marcus",
-            date: new Date(),
-            image: "./charles.png"
-        }
-    ]
-)
+const initialState = conversasAdapter.getInitialState()
 
 const conversasSlice = createSlice({
     name: 'conversas',
@@ -40,7 +18,22 @@ const conversasSlice = createSlice({
         adicionarConversa: conversasAdapter.addOne,
         atualizarConversa: conversasAdapter.updateOne,
         removerConversa: conversasAdapter.removeOne
-    }
+    },
+    extraReducers: (builder) => {
+    builder
+        .addCase(getConversas.fulfilled, (state, action) => {
+            conversasAdapter.setAll(state, action.payload)
+        })
+        .addCase(criarConversa.fulfilled, (state, action) => {
+            conversasAdapter.addOne(state, action.payload)
+        })
+        .addCase(editarConversa.fulfilled, (state, action) => {
+            conversasAdapter.upsertOne(state, action.payload)
+        })
+        .addCase(deletarConversa.fulfilled, (state, action) => {
+            conversasAdapter.removeOne(state, action.payload)
+        })
+}
 })
 
 export const {
