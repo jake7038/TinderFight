@@ -7,6 +7,11 @@
     },
     {
       "id": "gf2fa",
+      "email": "teste@email.com",
+      "senha": "1234"
+    },
+    {
+      "id": "efgw3h",
       "email": "charle@email.com",
       "senha": "1234"
     }
@@ -53,13 +58,7 @@
     }
   ],
   "mensagens": [
-    {
-      "id": "1",
-      "conversaId": "1",
-      "texto": "fala aí",
-      "sender": "other",
-      "date": "2026-04-06"
-    }
+    
   ],
   "conversas": [
     {

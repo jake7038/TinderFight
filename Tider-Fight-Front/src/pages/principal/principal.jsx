@@ -4,6 +4,7 @@ import { useAppSelector } from "../../redux/hookers"
 import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
 import { fetchLutadores } from '../../redux/requisicoes/lutadorThunk'
 import { useState, useEffect } from 'react'
+import { criarConversa } from '../../redux/requisicoes/conversasThunk'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
 
@@ -23,10 +24,28 @@ export function Principal() {
         return lutadores[0]
     })
 
+    const next = () => {
+        lutador = lutadores
+    }
+
+    const match = () => {
+        
+        dispatch(criarConversa(
+            {
+                usuarioId: usuario.id,
+                matchId: lutador.userId,
+                matchNome: lutador.nome,
+                image: lutador.img
+            }
+        ))
+    }
+    
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const openModal = () => setIsModalOpen(true)
     const closeModal = () => setIsModalOpen(false)
+
+
 
     useEffect(() => {
     dispatch(fetchLutadores(usuario.id))
@@ -59,13 +78,13 @@ export function Principal() {
             </div>
             
             <div className="choice">
-                    <div className="nop">
+                    <div className="nop" onClick={next}>
                         <div className="circle">
                             <img src="/x.png" alt="" />
                         </div>
                     </div>
 
-                    <div className="yes">
+                    <div className="yes" onClick={match}>
                         <div className="circle">
                             <img src="/mira.png" alt="" />
                         </div>
