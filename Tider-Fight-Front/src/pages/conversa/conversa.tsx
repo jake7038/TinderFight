@@ -1,18 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { conversasSelectors } from "../../redux/slices/conversasSlice";
 import { getConversas, deletarConversa } from "../../redux/requisicoes/conversasThunk";
-import { Conversas } from "../../tipos/conversasTipo";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hookers";
 import "./conversa.css";
-type FooterTab = "swap" | "chat" | "profile" | "history";
-
-interface ChatListProps {
-    activeTab?: FooterTab;
-    onChatSelect?: (conversa: Conversas) => void;
-    onTabChange?: (tab: FooterTab) => void;
-}
-
 
 
 const formatDate = (date: Date): string => {
@@ -42,16 +33,16 @@ function Conversa  () {
     const dispatch = useAppDispatch()
     const usuario = useAppSelector(state => state.usuario)
     const conversas = useAppSelector(conversasSelectors.selectAll)
-    const [search, setSearch] = useState("");
-
+    
+    
 
     const golutador = () => {
     
     nav("/lutadores")
     }
 
-    const GoChat = () => {
-        nav("/chat")
+    const GoChat = (conversaId: string, nomeMatch: string, foto: string) => {
+        nav("/chat", { state: { conversaId, nomeMatch, foto }  })
     }
 
     const deletarMatch = (id: string) => {
@@ -66,12 +57,7 @@ function Conversa  () {
     }, [usuario, dispatch])    
     
     
-
-
-    const filtered = conversas?.filter((c) =>
-        (c.lastMessage || "").toLowerCase().includes(search.toLowerCase())
-    );
-
+    
 
     return (
         <div className="cl-screen">
@@ -87,11 +73,11 @@ function Conversa  () {
         </div>
 
         <div className="cl-list">
-            {filtered.length === 0 && (
+            {conversas.length === 0 && (
             <div className="cl-empty">Nenhuma conversa encontrada</div>
             )}
-            {filtered.map((conversa, i) => (
-            <button onClick={GoChat}
+            {conversas.map((conversa, i) => (
+            <button onClick={() => GoChat(conversa.id, conversa.matchNome, conversa.image)}
                 key={conversa.id}
                 className="cl-item"
                 style={{ animationDelay: `${i * 60}ms` }}
@@ -114,7 +100,6 @@ function Conversa  () {
                     <span className="cl-item-name">{conversa.matchNome}</span>
                     <div className="cl-item-row">
                     <img  className="cl-trash" onClick={(e) => {e.stopPropagation(); deletarMatch(conversa.id)}} src="/lixeira.png"></img>
-                    <span className="cl-item-time">{formatDate(conversa.date)}</span>
                     </div>
                     
                 </div>

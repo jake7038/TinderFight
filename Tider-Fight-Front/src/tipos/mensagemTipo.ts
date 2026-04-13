@@ -3,5 +3,5 @@ export type Mensagem = {
     conversaid: string,
     text: string,
     sender: string,
-    time: Date,
+    time: string,
 }

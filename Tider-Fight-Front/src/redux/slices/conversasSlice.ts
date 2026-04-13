@@ -1,11 +1,10 @@
-import { createSlice, createEntityAdapter, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { Conversas } from '../../tipos/conversasTipo'
 import { RootState } from '../store'
 import { getConversas, criarConversa, deletarConversa } from '../requisicoes/conversasThunk'
 
 const conversasAdapter = createEntityAdapter<Conversas, string>({
     selectId: (c) => c.id,
-    sortComparer: (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 })
 
 const initialState = conversasAdapter.getInitialState()

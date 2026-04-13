@@ -62,7 +62,18 @@
       "pesoMax": 98
     }
   ],
-  "mensagens": [],
-  "conversas": [],
+  "mensagens": [
+    
+  ],
+  "conversas": [
+    {
+      "usuarioId": "jrmTKCL0Dxg",
+      "matchId": "asfqf",
+      "matchNome": "Charle",
+      "image": "/charles.png",
+      "date": "2026-04-13T00:09:42.692Z",
+      "id": "BmibTdieklo"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

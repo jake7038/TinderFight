@@ -1,14 +1,14 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { Mensagem } from "../../tipos/mensagemTipo"
 
-const URL = "http://localhost:8000/conversas"
+const URL = "http://localhost:8000/mensagens"
 
 export const getMensagens = createAsyncThunk(
     "mensagens/fetchMensagens",
-    async () => {
-        const res = await fetch(URL)
+    async (conversaid: string) => {
+        const res = await fetch(`${URL}?conversaid=${conversaid}`)
         const data = await res.json()
-
+        
         return data.map((m: any) => ({
             ...m,
             time: new Date(m.time).toISOString()

@@ -5,7 +5,7 @@ import { getMensagens, criarMensagem, deletarMensagem , editarMensagem } from '.
 
 const mensagensAdapter = createEntityAdapter<Mensagem, string>({
     selectId: (m: Mensagem) => m.id,
-    sortComparer: (a, b) => a.time.getTime() - b.time.getTime()
+    sortComparer: (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
 })
 
 const initialState = mensagensAdapter.getInitialState()

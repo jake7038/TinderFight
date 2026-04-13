@@ -9,14 +9,10 @@ export const getConversas = createAsyncThunk(
         const res = await fetch(URL)
         const data = await res.json()
 
-        return data //nao é o ideial filtrar o resultado, fazer o filtro no banco quando alterar para banco relacional
+        return data //sera alterado quando for feito o backend
             .filter((c: any) =>
                 c.usuarioId === usuarioId || c.matchId === usuarioId
             )
-            .map((c: any) => ({
-                ...c,
-                date: new Date(c.date).toISOString()
-            }))
     }
 )
 
@@ -43,8 +39,7 @@ export const criarConversa = createAsyncThunk(
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                ...dados,
-                date: new Date().toISOString()
+                ...dados
             })
         })
 
