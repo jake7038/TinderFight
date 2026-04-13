@@ -4,6 +4,5 @@ export type Conversas = {
     lastMessage: string,
     matchId: string,
     matchNome: string,
-    date: Date,
     image: string
 }

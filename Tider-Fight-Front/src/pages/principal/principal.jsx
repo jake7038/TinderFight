@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch } from "../../redux/hookers"
 import { useAppSelector } from "../../redux/hookers"
-import { lutadoresSelectors } from "../../redux/slices/lutadorSlice"
+import { lutadoresSelectors, removerLutador } from "../../redux/slices/lutadorSlice"
 import { fetchLutadores } from '../../redux/requisicoes/lutadorThunk'
 import { useState, useEffect } from 'react'
+import { criarConversa } from '../../redux/requisicoes/conversasThunk'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
 
@@ -18,15 +19,31 @@ export function Principal() {
     nav("/conversas")
     }
 
-    const lutador = useAppSelector(state => {
-        const lutadores = lutadoresSelectors.selectAll(state)
-        return lutadores[0]
-    })
+    const lutadores = useAppSelector(lutadoresSelectors.selectAll)
 
+    const next = () => {
+        if (!lutadores[0]) return
+        dispatch(removerLutador(lutadores[0].id))
+    }
+
+    const match = () => {
+        dispatch(criarConversa(
+            {
+                usuarioId: usuario.id,
+                matchId: lutadores[0].userId,
+                matchNome: lutadores[0].nome,
+                image: lutadores[0].img
+            }
+        ))
+        next()
+    }
+    
     const [isModalOpen, setIsModalOpen] = useState(false)
 
     const openModal = () => setIsModalOpen(true)
     const closeModal = () => setIsModalOpen(false)
+
+
 
     useEffect(() => {
     dispatch(fetchLutadores(usuario.id))
@@ -39,16 +56,16 @@ export function Principal() {
                 <img className="imagem_header" src="src/assets/Choose your fighter in flames 1.png" alt="" />
                 <img src="/Map.png" alt="" />
             </header>
-            <div className="card" style={{backgroundImage: lutador?.img ? `url(${lutador.img})` : 'none' }} >
+            <div className="card" style={{backgroundImage: lutadores[0]?.img ? `url(${lutadores[0].img})` : 'none' }} >
 
-                {!lutador ? (
+                {!lutadores[0] ? (
                     <p className="carregando">Encontrando os melhores lutadores na sua área <span className="dots"></span> </p>
                 ) : (<>
-                            <h2 className="name">{lutador.nome}</h2>
+                            <h2 className="name">{lutadores[0].nome}</h2>
                         <div className="place_fighter">
-                            <p> <img src="/pontogps.png" alt="" /> {lutador.cidade}, {lutador.estado}</p>
+                            <p> <img src="/pontogps.png" alt="" /> {lutadores[0].cidade}, {lutadores[0].estado}</p>
                             <div className="category">
-                                {lutador.modalidade.map(mod => (
+                                {lutadores[0].modalidade.map(mod => (
                                 <p key={mod}>{mod}</p>
                                 ))}
                             </div>
@@ -59,13 +76,13 @@ export function Principal() {
             </div>
             
             <div className="choice">
-                    <div className="nop">
+                    <div className="nop" onClick={next}>
                         <div className="circle">
                             <img src="/x.png" alt="" />
                         </div>
                     </div>
 
-                    <div className="yes">
+                    <div className="yes" onClick={match}>
                         <div className="circle">
                             <img src="/mira.png" alt="" />
                         </div>

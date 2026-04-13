@@ -135,6 +135,12 @@
   background: #1e1e1e;
 }
 
+.cl-trash{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+
 @keyframes cl-slide-in {
   from {
     opacity: 0;

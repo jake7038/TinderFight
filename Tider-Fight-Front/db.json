@@ -7,8 +7,18 @@
     },
     {
       "id": "gf2fa",
+      "email": "teste@email.com",
+      "senha": "1234"
+    },
+    {
+      "id": "efgw3h",
       "email": "charle@email.com",
       "senha": "1234"
+    },
+    {
+      "email": "rafa@email.com",
+      "senha": "1234",
+      "id": "jrmTKCL0Dxg"
     }
   ],
   "lutadores": [
@@ -53,22 +63,16 @@
     }
   ],
   "mensagens": [
-    {
-      "id": "1",
-      "conversaId": "1",
-      "texto": "fala aí",
-      "sender": "other",
-      "date": "2026-04-06"
-    }
+    
   ],
   "conversas": [
     {
-      "id": "1",
-      "usuarioId": "1",
-      "lastMessage": "fala ai",
-      "matchId": "2",
+      "usuarioId": "jrmTKCL0Dxg",
+      "matchId": "asfqf",
       "matchNome": "Charle",
-      "date": "2026-04-06"
+      "image": "/charles.png",
+      "date": "2026-04-13T00:09:42.692Z",
+      "id": "BmibTdieklo"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -1,56 +1,65 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../redux/hookers";
+import { getMensagens, criarMensagem } from "../../redux/requisicoes/mensagemThunk";
+import { mensagensSelectors } from "../../redux/slices/mensagemSlice";
 import "./chat.css";
 
-
 export default function Chat() {
-
     const nav = useNavigate()
+    const location = useLocation()
+    const dispatch = useAppDispatch()
 
-    const GoConversa = () =>{
-        nav("/conversas")
+    const [texto, setTexto] = useState("")
+
+    const conversaId  = location.state?.conversaId
+    const nomeMatch  = location.state?.nomeMatch
+    const foto = location.state?.foto
+    const usuario = useAppSelector(state => state.usuario)
+
+    useEffect(() => {
+        if (conversaId == null|| nomeMatch == null) return 
+        dispatch(getMensagens(conversaId))
+        
+    }, [conversaId, nomeMatch,dispatch])
+
+    const GoConversa = () => nav("/conversas")
+    const mensagens = useAppSelector(mensagensSelectors.selectAll)
+
+
+    const enviarMensagem = () => {
+        if (!texto.trim()) return
+
+        dispatch(criarMensagem({
+            conversaid: conversaId,
+            text: texto,
+            sender: usuario.id,
+        }))
+
+        setTexto("")
     }
-    const messages = [
-    {
-        id: 1,
-        text: "Fala tu!",
-        sender: "other",
-        time: "20:41",
-    },
-    {
-        id: 2,
-        text: "Opa!",
-        sender: "me",
-        time: "20:42",
-    },
-    ];
 
     return (
-    <div className="chat-container">
-
-        <div className="chat-header">
-            <div className="user-info">
-            <img className="avatar" src="/charles.png" />
-            <span>Charles do Bronx</span>
-            </div>
-            <div className="menu" onClick={GoConversa}>☰</div>
-        </div>
-
-        <div className="chat-body">
-            <div className="chat-date">ter. 17 de mar, 17:40</div>
-
-            {messages.map((msg) => (
-                <div key={msg.id} className={`message-row ${ msg.sender === "me" ? "me" : "other"}`}>
-                {msg.sender === "other" && <img src="/charles.png" className="avatar small" />}
-                    <div className="message-bubble">{msg.text}</div>
+        <div className="chat-container">
+            <div className="chat-header">
+                <div className="user-info">
+                    <img className="avatar" src={foto} />
+                    <span>{nomeMatch}</span>
                 </div>
-            ))}
+                <div className="menu" onClick={GoConversa}>☰</div>
+            </div>
+            <div className="chat-body">
+                {mensagens.map((msg) => (
+                    <div key={msg.id} className={`message-row ${msg.sender === usuario.id ? "me" : "other"}`}>
+                        {msg.sender != usuario.id && <img src={foto} className="avatar small" />}
+                        <div className="message-bubble">{msg.text}</div>
+                    </div>
+                ))}
+            </div>
+            <div className="chat-input">
+                <input value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Digite uma mensagem..." />
+                <button onClick={enviarMensagem}>Enviar</button>
+            </div>
         </div>
-
-        <div className="chat-input">
-            <input placeholder="Digite uma mensagem..." />
-            <button>Enviar</button>
-        </div>
-    </div>
     );
 }
