@@ -152,7 +152,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
                             <p className="sm-section-label">Informações de login</p>
 
                             <div style={{ display: "flex", gap: "20px" }}>
-                                <div>
+                                <div className="sm-col">
                                     <p>Email</p>
                                     <input
                                         type="text"
@@ -163,7 +163,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
                                     />
                                 </div>
 
-                                <div>
+                                <div className="sm-col">
                                     <p>Senha</p>
                                     <input
                                         type="text"
@@ -194,7 +194,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
                             </div>
 
                             <div style={{ display: "flex", gap: "20px" }}>
-                                <div>
+                                <div className="sm-col" >
                                     <p>Cidade</p>
                                     <input
                                         type="text"
@@ -205,7 +205,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
                                     />
                                 </div>
 
-                                <div>
+                                <div className="sm-col">
                                     <p>Estado</p>
                                     <input
                                         type="text"
