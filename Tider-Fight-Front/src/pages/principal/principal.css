@@ -9,17 +9,29 @@ body {
 }
 
 .header {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     padding: 16px 20px;
 }
-.imagem_header{
-    flex: 0.8;
+
+
+.header_img {
+    height: 64px;
+    object-fit: contain;
+}
+
+.logout_image {
+    height: 44px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+
+.header_center {
     display: flex;
-    justify-content: center;}
-
-
+    justify-content: center;
+}
 
 .principal{
     background: #0B0B0F;

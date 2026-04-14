@@ -22,7 +22,7 @@ interface SettingsModalProps {
 }
 
 const ALL_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô", "Capoeira"];
-const MY_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô"];
+const MY_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô", "Capoeira"];
 
 const DEFAULT_FIGHTER: FighterPreferences = {
     distance: 100,
@@ -33,7 +33,7 @@ const DEFAULT_FIGHTER: FighterPreferences = {
 
 
 
-const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
+const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
     const dispatch = useAppDispatch();
     const nav = useNavigate();
     const usuario = useAppSelector(state => state.usuario);
