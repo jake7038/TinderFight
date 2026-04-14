@@ -47,6 +47,18 @@
         "Capoeira"
       ],
       "peso": "92kg"
+    },
+    {
+      "userId": "jrmTKCL0Dxg",
+      "img": "/charles.png",
+      "nome": "lutador brabo",
+      "cidade": "Sao paulo",
+      "estado": "SP",
+      "modalidade": [
+        "Jiu Jitsu"
+      ],
+      "peso": 117,
+      "id": "U5M7dzOi3jo"
     }
   ],
   "preferencias": [
@@ -62,9 +74,7 @@
       "pesoMax": 98
     }
   ],
-  "mensagens": [
-    
-  ],
+  "mensagens": [],
   "conversas": [
     {
       "usuarioId": "jrmTKCL0Dxg",

@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react'
 import { criarConversa } from '../../redux/requisicoes/conversasThunk'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
+import { logout } from '../../redux/slices/usuarioSlice'
 
 export function Principal() { 
     
@@ -43,7 +44,10 @@ export function Principal() {
     const openModal = () => setIsModalOpen(true)
     const closeModal = () => setIsModalOpen(false)
 
-
+    const Gologout = () => {
+        dispatch(logout())
+        nav("/")
+    }
 
     useEffect(() => {
     dispatch(fetchLutadores(usuario.id))
@@ -52,9 +56,10 @@ export function Principal() {
     return(
         <div className="principal">
             <header className="header">
-                <img src="/User.png" alt="" />
-                <img className="imagem_header" src="src/assets/Choose your fighter in flames 1.png" alt="" />
-                <img src="/Map.png" alt="" />
+                <img onClick={Gologout} className='logout_image' src="/logout.png" alt="" />
+                <div className='hearder_center'>
+                    <img  className='header_img' src="src/assets/Choose your fighter in flames 1.png" alt="" />
+                </div>
             </header>
             <div className="card" style={{backgroundImage: lutadores[0]?.img ? `url(${lutadores[0].img})` : 'none' }} >
 
