@@ -19,6 +19,11 @@
       "email": "rafa@email.com",
       "senha": "1234",
       "id": "jrmTKCL0Dxg"
+    },
+    {
+      "email": "augusto@email.com",
+      "senha": "123",
+      "id": "ebHP6_upfFw"
     }
   ],
   "lutadores": [
@@ -47,18 +52,6 @@
         "Capoeira"
       ],
       "peso": "92kg"
-    },
-    {
-      "userId": "jrmTKCL0Dxg",
-      "img": "/charles.png",
-      "nome": "lutador brabo",
-      "cidade": "Sao paulo",
-      "estado": "SP",
-      "modalidade": [
-        "Jiu Jitsu"
-      ],
-      "peso": 117,
-      "id": "U5M7dzOi3jo"
     }
   ],
   "preferencias": [
@@ -74,16 +67,15 @@
       "pesoMax": 98
     }
   ],
-  "mensagens": [],
-  "conversas": [
+  "mensagens": [
     {
-      "usuarioId": "jrmTKCL0Dxg",
-      "matchId": "asfqf",
-      "matchNome": "Charle",
-      "image": "/charles.png",
-      "date": "2026-04-13T00:09:42.692Z",
-      "id": "BmibTdieklo"
+      "conversaid": "BmibTdieklo",
+      "text": "fala ai",
+      "sender": "jrmTKCL0Dxg",
+      "time": "2026-04-14T19:00:53.447Z",
+      "id": "gwrnWJYhQr4"
     }
   ],
+  "conversas": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
