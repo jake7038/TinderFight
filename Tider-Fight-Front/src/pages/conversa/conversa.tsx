@@ -3,29 +3,8 @@ import { conversasSelectors } from "../../redux/slices/conversasSlice";
 import { getConversas, deletarConversa } from "../../redux/requisicoes/conversasThunk";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hookers";
-import "./conversa.css";
+import "./conversa.css"
 
-
-const formatDate = (date: Date): string => {
-    const now = new Date();
-    const diff = now.getTime() - new Date(date).getTime();
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-
-    if (days === 0) {
-        return new Date(date).toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-    });
-    }
-    if (days === 1) return "ontem";
-    if (days < 7) {
-    return new Date(date).toLocaleDateString("pt-BR", { weekday: "short" });
-    }
-    return new Date(date).toLocaleDateString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    });
-};
 
 function Conversa  () {
 

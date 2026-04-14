@@ -9,10 +9,8 @@ interface LoginModalProps {
     onClose: () => void;
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({
-    isOpen,
-    onClose
-}) => {
+const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+    
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 

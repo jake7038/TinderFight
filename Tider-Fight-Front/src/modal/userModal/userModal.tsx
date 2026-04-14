@@ -22,7 +22,7 @@ interface SettingsModalProps {
 }
 
 const ALL_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô", "Capoeira"];
-const MY_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô"];
+const MY_MODALITIES = ["MMA", "Jiu Jitsu", "Muay Thai", "Boxe", "Wrestling", "Judô", "Capoeira"];
 
 const DEFAULT_FIGHTER: FighterPreferences = {
     distance: 100,
@@ -33,7 +33,7 @@ const DEFAULT_FIGHTER: FighterPreferences = {
 
 
 
-const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
+const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
     const dispatch = useAppDispatch();
     const nav = useNavigate();
     const usuario = useAppSelector(state => state.usuario);
@@ -152,7 +152,7 @@ const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                             <p className="sm-section-label">Informações de login</p>
 
                             <div style={{ display: "flex", gap: "20px" }}>
-                                <div>
+                                <div className="sm-col">
                                     <p>Email</p>
                                     <input
                                         type="text"
@@ -163,7 +163,7 @@ const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                                     />
                                 </div>
 
-                                <div>
+                                <div className="sm-col">
                                     <p>Senha</p>
                                     <input
                                         type="text"
@@ -194,7 +194,7 @@ const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                             </div>
 
                             <div style={{ display: "flex", gap: "20px" }}>
-                                <div>
+                                <div className="sm-col" >
                                     <p>Cidade</p>
                                     <input
                                         type="text"
@@ -205,7 +205,7 @@ const UserModal: React.FC<SettingsModalProps> = ({ isOpen, onClose }) => {
                                     />
                                 </div>
 
-                                <div>
+                                <div className="sm-col">
                                     <p>Estado</p>
                                     <input
                                         type="text"

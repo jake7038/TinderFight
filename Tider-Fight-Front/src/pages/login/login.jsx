@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom'
 import LoginModal from '../../modal/loginModal/loginModal'
 import CadastraModal from '../../modal/cadastraModal/cadastraModal'
 import { useState } from 'react'
