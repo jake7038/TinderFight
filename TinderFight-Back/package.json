@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "express": "^5.2.1",
-    "mongodb": "^7.1.1"
+    "knex": "^3.2.10",
+    "pg": "^8.20.0"
   }
 }
