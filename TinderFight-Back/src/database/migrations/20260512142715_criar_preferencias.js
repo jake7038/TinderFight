@@ -7,18 +7,9 @@ exports.up = function (knex) {
     table.increments("id_preferencia").primary();
     table.string("cidade").notNullable();
     table.string("estado").notNullable();
-    table.integer("peso").notNullable(); // IMPORTANTE: avaliar pra ver se não é float
-
-    // Para as modalidades, como no Postgres não existe 'array' simples de string
-    // como no JSON, vamos salvar como um campo de texto ou JSON
+    table.integer("peso").notNullable();
     table.jsonb("modalidades");
-
-    table
-      .integer("id_usuario")
-      .unsigned()
-      .references("id_usuario")
-      .inTable("usuarios")
-      .onDelete("CASCADE");
+    table.integer("id_usuario").unsigned().references("id_usuario").inTable("usuarios").onDelete("CASCADE");
 
     table.timestamps(true, true);
   });
