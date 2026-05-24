@@ -20,9 +20,7 @@ exports.up = function (knex) {
       .inTable("usuarios")
       .onDelete("CASCADE");
 
-    // IMPORTANTE:
-    // Armazenar nomes de usuário e imagens por meio de JOINS.
-    // Sem guardar dados redundantes
+
 
     table.timestamps(true, true);
   });

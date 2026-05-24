@@ -8,19 +8,10 @@ exports.up = function (knex) {
     table.string("nome").notNullable();
     table.string("cidade").notNullable();
     table.string("estado").notNullable();
-    table.string("img"); // (link)
+    table.string("img"); 
     table.float("peso").notNullable();
-
-    // Para as modalidades, como no Postgres não existe 'array' simples de string
-    // como no JSON, vamos salvar como um campo de texto ou JSON
     table.jsonb("modalidades");
-
-    table
-      .integer("id_usuario")
-      .unsigned()
-      .references("id_usuario")
-      .inTable("usuarios")
-      .onDelete("CASCADE");
+    table.integer("id_usuario").unsigned().references("id_usuario").inTable("usuarios").onDelete("CASCADE");
 
     table.timestamps(true, true);
   });
@@ -31,5 +22,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTable("lutadores");
+    return knex.schema.dropTable("lutadores");
 };
