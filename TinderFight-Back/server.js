@@ -1,12 +1,14 @@
-//Vamos usar o dotenv?
-const express = require('express')
+const express = require("express");
 
+const lutadoresRoutes = require("./src/routes/lutadoresRoutes");
 
-const app = express()
-const host = 'localhost'
-const porta = 3000
-                
-app.listen (porta, host, () => {
-console.log('Conectado ao Servidor')
-})
+const app = express();
 
+app.use(express.json());
+
+app.use("/lutadores", lutadoresRoutes);
+
+const PORTA = 8000;
+app.listen(PORTA, () => {
+  console.log(`Servidor rodando perfeitamente na porta ${PORTA}`);
+});
