@@ -38,17 +38,14 @@ async function listarLutadoresService() {
 
 async function atualizarLutadorService(idLutador, dados) {
   try {
-    // 1. Preparamos um objeto vazio para receber só o que foi enviado
     const dadosParaAtualizar = {};
 
-    // 2. Mapeamento Condicional (Só adiciona se o dado existir)
     if (dados.nome) dadosParaAtualizar.nome = dados.nome;
     if (dados.cidade) dadosParaAtualizar.cidade = dados.cidade;
     if (dados.estado) dadosParaAtualizar.estado = dados.estado;
     if (dados.peso) dadosParaAtualizar.peso = dados.peso;
     if (dados.img) dadosParaAtualizar.img = dados.img;
 
-    // Tratamento especial para o Array, igual fizemos no Create
     if (dados.modalidade) {
       dadosParaAtualizar.modalidades = JSON.stringify(dados.modalidade);
     }

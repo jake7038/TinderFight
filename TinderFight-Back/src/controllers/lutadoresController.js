@@ -4,7 +4,6 @@ const {
   atualizarLutadorService,
   deletarLutadorService,
 } = require("../services/lutadoresService");
-const { atualizarLutadorService } = require("../services/lutadorService");
 
 async function criarLutadorController(req, res) {
   try {
