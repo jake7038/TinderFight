@@ -1,37 +1,93 @@
+import { useNavigate } from 'react-router-dom'
+import { useAppDispatch } from "../../redux/hookers"
+import { useAppSelector } from "../../redux/hookers"
+import { lutadoresSelectors, removerLutador } from "../../redux/slices/lutadorSlice"
+import { fetchLutadores } from '../../redux/requisicoes/lutadorThunk'
+import { useState, useEffect } from 'react'
+import { criarConversa } from '../../redux/requisicoes/conversasThunk'
+import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
-export function Principal() {
+import { logout } from '../../redux/slices/usuarioSlice'
 
-    const modalidade = ['Jiu Jitsu', 'MMA']
+export function Principal() { 
+    
+    const dispatch = useAppDispatch()
+    const nav = useNavigate()
+    const usuario = useAppSelector(state => state.usuario)
+
+    const goConversas = () => {
+    
+    nav("/conversas")
+    }
+
+    const lutadores = useAppSelector(lutadoresSelectors.selectAll)
+
+    const next = () => {
+        if (!lutadores[0]) return
+        dispatch(removerLutador(lutadores[0].id))
+    }
+
+    const match = () => {
+        dispatch(criarConversa(
+            {
+                usuarioId: usuario.id,
+                matchId: lutadores[0].userId,
+                matchNome: lutadores[0].nome,
+                image: lutadores[0].img
+            }
+        ))
+        next()
+    }
+    
+    const [isModalOpen, setIsModalOpen] = useState(false)
+
+    const openModal = () => setIsModalOpen(true)
+    const closeModal = () => setIsModalOpen(false)
+
+    const Gologout = () => {
+        dispatch(logout())
+        nav("/")
+    }
+
+    useEffect(() => {
+    dispatch(fetchLutadores(usuario.id))
+    }, [dispatch])
 
     return(
         <div className="principal">
             <header className="header">
-                <img src="/User.png" alt="" />
-                <img className="imagem_header" src="src/assets/Choose your fighter in flames 1.png" alt="" />
-                <img src="/Map.png" alt="" />
+                <img onClick={Gologout} className='logout_image' src="/logout.png" alt="" />
+                <div className='hearder_center'>
+                    <img  className='header_img' src="src/assets/Choose your fighter in flames 1.png" alt="" />
+                </div>
             </header>
-            <div className="card">
-                    <h2 className="name">Charles do Bronx</h2>
-                    <div className="place_fighter">
-                        <img src="/pontogps.png" alt="" />
-                        <p>Guarujá, SP</p>
-                        <div className="category">
-                            {modalidade.map(mod => (
-                            <p key={mod}>{mod}</p>
-                            ))}
+            <div className="card" style={{backgroundImage: lutadores[0]?.img ? `url(${lutadores[0].img})` : 'none' }} >
+
+                {!lutadores[0] ? (
+                    <p className="carregando">Encontrando os melhores lutadores na sua área <span className="dots"></span> </p>
+                ) : (<>
+                            <h2 className="name">{lutadores[0].nome}</h2>
+                        <div className="place_fighter">
+                            <p> <img src="/pontogps.png" alt="" /> {lutadores[0].cidade}, {lutadores[0].estado}</p>
+                            <div className="category">
+                                {lutadores[0].modalidade.map(mod => (
+                                <p key={mod}>{mod}</p>
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                    
+                    </>
+                )}
+            
             </div>
             
             <div className="choice">
-                    <div className="nop">
+                    <div className="nop" onClick={next}>
                         <div className="circle">
                             <img src="/x.png" alt="" />
                         </div>
                     </div>
 
-                    <div className="yes">
+                    <div className="yes" onClick={match}>
                         <div className="circle">
                             <img src="/mira.png" alt="" />
                         </div>
@@ -46,24 +102,22 @@ export function Principal() {
                         <p>Swap</p>
                     </div>
                     
-                    <div>
-                        <img src="/chat.png" alt="" />
+                    <div onClick={ goConversas} >
+                        <img src="/chat.png" alt=""  />
                         <p>Chat</p>
                     </div>
                     
-                    <div>
+                    <div onClick={openModal}>
                         <img src="/lutador.png" alt="" />
                         <p>Perfil do Lutador</p>
                     </div>
 
-                    <div>
-                        <img src="/historico.png" alt="" />
-                        <p>Histórico</p>
                     
-                    </div>
                 
                 </div>
             </footer>
+                
+            <UserModal isOpen={isModalOpen} onClose={closeModal} onSave={() => null}></UserModal>
 
         </div>
 
