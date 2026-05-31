@@ -5,7 +5,7 @@ function autenticarToken(req, res, next) {
     const token = authHeader && authHeader.split(" ")[1]; // Bearer <token>
 
   if (!token) {
-    return res.status(401).json({ mensagem: "Token n√£o fornecido." });
+    return res.status(401).json({ mensagem: "Token n„o fornecido." });
   }
 
   try {
@@ -16,7 +16,7 @@ function autenticarToken(req, res, next) {
     if (error.name === "TokenExpiredError") {
         return res.status(401).json({ mensagem: "Token expirado." });
     }
-    return res.status(403).json({ mensagem: "Token inv√°lido." });
+    return res.status(403).json({ mensagem: "Token Inv·lido." });
   }
 }
 

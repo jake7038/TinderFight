@@ -1,4 +1,4 @@
-const conversaService = require("../services/conversaService");
+const conversaService = require("../services/serviceConversa");
  
 async function listarConversas(req, res) {
   try {
