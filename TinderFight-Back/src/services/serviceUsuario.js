@@ -32,4 +32,24 @@ async function buscarUsuario(id_usuario) {
   return usuario;
 }
 
-module.exports = { criarUsuario, buscarUsuario };
+async function atualizarUsuario(id_usuario, { email, senha }) {
+  const dados = {};
+  if (email) dados.email = email;
+  if (senha) dados.senha = await bcrypt.hash(senha, 10);
+
+  await database(TABLE).where({ id_usuario }).update(dados);
+
+  return await buscarUsuario(id_usuario);
+}
+
+async function deletarUsuario(id_usuario) {
+  const deletados = await database(TABLE).where({ id_usuario }).delete();
+
+  if (!deletados) {
+    const erro = new Error("Usuário não encontrado.");
+    erro.status = 404;
+    throw erro;
+  }
+}
+
+module.exports = { criarUsuario, buscarUsuario, atualizarUsuario, deletarUsuario, };

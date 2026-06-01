@@ -1,7 +1,9 @@
 const {
   criarUsuario,
   buscarUsuario,
-} = require("../services/serviceUsuario.js");
+  atualizarUsuario,
+  deletarUsuario,
+} = require("../services/serviceUsuario");
 
 async function criarcontrollerUsuario(req, res) {
   const { email, senha } = req.body;
@@ -29,9 +31,35 @@ async function buscarcontrollerUsuario(req, res) {
   }
 }
 
+async function atualizarcontrollerUsuario(req, res) {
+  const { id_usuario } = req.user;
+  const dados = req.body;
+
+
+  try {
+    const usuario = await atualizarUsuario(id_usuario, dados);
+    return res.status(200).json({ mensagem: "Usuário atualizado.", usuario });
+  } catch (error) {
+    return res.status(error.status ?? 500).json({ mensagem: error.message });
+  }
+}
+
+
+async function deletarcontrollerUsuario(req, res) {
+  const { id_usuario } = req.user;
+
+
+  try {
+    await deletarUsuario(id_usuario);
+    return res.status(200).json({ mensagem: "Usuário deletado com sucesso." });
+  } catch (error) {
+    return res.status(error.status ?? 500).json({ mensagem: error.message });
+  }
+}
 
 module.exports = {
   criarcontrollerUsuario,
   buscarcontrollerUsuario,
-,
+  atualizarcontrollerUsuario,
+  deletarcontrollerUsuario,
 };
