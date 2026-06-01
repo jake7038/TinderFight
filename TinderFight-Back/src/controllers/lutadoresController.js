@@ -3,7 +3,7 @@ const {
   listarLutadoresService,
   atualizarLutadorService,
   deletarLutadorService,
-} = require("../services/lutadoresService");
+} = require("../services/lutadorService");
 
 async function criarLutadorController(req, res) {
   try {

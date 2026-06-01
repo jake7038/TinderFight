@@ -1,5 +1,5 @@
 const conversaService = require("../services/serviceConversa");
- 
+
 async function listarConversas(req, res) {
   try {
     const idUsuario = req.user.id;
