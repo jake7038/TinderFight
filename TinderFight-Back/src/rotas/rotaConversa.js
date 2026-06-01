@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const conversaController = require("../controllers/controllerConversa");
+const conversaController = require("../controlers/controllerConversa");
 const autenticarToken = require("../middleware/autentication");
 
 router.get("/",  autenticarToken , conversaController.listarConversas);
