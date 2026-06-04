@@ -1,6 +1,6 @@
 const express = require("express");
+const autenticarToken = require("../middleware/autentication");
 const router = express.Router();
-const autenticarToken = require("../middlewares/autentication");
 const {
   criarcontrollerUsuario,
   buscarcontrollerUsuario,

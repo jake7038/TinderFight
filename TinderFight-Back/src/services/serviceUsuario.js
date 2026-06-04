@@ -6,15 +6,13 @@ const TABLE = "usuarios";
 async function criarUsuario({ email, senha }) {
   const usuarioExistente = await database(TABLE).where({ email }).first();
   if (usuarioExistente) {
-    const erro = new Error("E-mail já cadastrado.");
+    const erro = new Error("E-mail ja cadastrado.");
     erro.status = 409;
     throw erro;
   }
 
-  const senhaHash = await bcrypt.hash(senha, 10);
-  const [id_usuario] = await database(TABLE).insert({ email, senha: senhaHash });
-
-  return { id_usuario, email };
+    const senhaHash = await bcrypt.hash(senha, 10);
+    await database(TABLE).insert({ email, senha: senhaHash });
 }
 
 async function buscarUsuario(id_usuario) {
@@ -24,7 +22,7 @@ async function buscarUsuario(id_usuario) {
     .first();
 
   if (!usuario) {
-    const erro = new Error("Usuário não encontrado.");
+    const erro = new Error("Usuario nao encontrado.");
     erro.status = 404;
     throw erro;
   }

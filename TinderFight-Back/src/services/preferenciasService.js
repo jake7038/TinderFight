@@ -1,5 +1,5 @@
-const knexConfig = require("../../knexfile");
-const db = require("knex")(knexConfig.development);
+const database = require("../database/export");
+
 
 const TABLE = "preferencias";
 
@@ -7,7 +7,7 @@ async function criarPreferenciaService(dados) {
   try {
     const modalidadesString = JSON.stringify(dados.modalidade);
 
-    const resultado = await db(TABLE)
+    const resultado = await database(TABLE)
       .insert({
         id_usuario: dados.userId,
         img: dados.img,
@@ -29,7 +29,7 @@ async function criarPreferenciaService(dados) {
 
 async function listarPreferenciasService(idPreferencia) {
   try {
-    const preferencias = await db(TABLE)
+    const preferencias = await database(TABLE)
       .where("id_preferencia", idPreferencia)
       .select("*");
 
@@ -54,7 +54,7 @@ async function atualizarPreferenciasService(idPreferencia, dados) {
     }
     if (dados.peso) dadosParaAtualizar.peso = dados.peso;
 
-    const resultado = await db(TABLE)
+    const resultado = await database(TABLE)
       .where("id_preferencia", idPreferencia)
       .update(dadosParaAtualizar)
       .returning("*");
@@ -74,7 +74,7 @@ async function atualizarPreferenciasService(idPreferencia, dados) {
 
 async function deletarPreferenciasService(idPreferencia) {
   try {
-    const resultado = await db(TABLE)
+    const resultado = await database(TABLE)
       .where("id_preferencia", idPreferencia)
       .del();
 

@@ -21,8 +21,7 @@ exports.up = function (knex) {
       .onDelete("CASCADE");
 
 
-
-    table.timestamps(true, true);
+    table.string("ultimamensagem");
   });
 };
 

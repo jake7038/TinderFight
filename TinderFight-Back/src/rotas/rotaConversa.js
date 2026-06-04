@@ -1,7 +1,8 @@
 const express = require("express");
-const router = express.Router();
 const conversaController = require("../controllers/controllerConversa");
 const autenticarToken = require("../middleware/autentication");
+const router = express.Router();
+
 
 router.get("/",  autenticarToken , conversaController.listarConversas);
 

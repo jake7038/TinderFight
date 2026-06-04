@@ -1,5 +1,4 @@
-const knexConfig = require("../../knexfile");
-const db = require("knex")(knexConfig.development);
+const database = require("../database/export");
 
 const TABLE = "lutadores";
 
@@ -7,7 +6,7 @@ async function criarLutadorService(dados) {
   try {
     const modalidadesString = JSON.stringify(dados.modalidade);
 
-    const resultado = await db("lutadores")
+    const resultado = await database("lutadores")
       .insert({
         id_usuario: dados.userId,
         nome: dados.nome,
@@ -27,7 +26,7 @@ async function criarLutadorService(dados) {
 
 async function listarLutadoresService() {
   try {
-    const lutadores = await db(TABLE).select("*");
+    const lutadores = await database(TABLE).select("*");
 
     return lutadores;
   } catch (error) {
@@ -50,7 +49,7 @@ async function atualizarLutadorService(idLutador, dados) {
       dadosParaAtualizar.modalidades = JSON.stringify(dados.modalidade);
     }
 
-    const resultado = await db(TABLE)
+    const resultado = await database(TABLE)
       .where("id_lutador", idLutador)
       .update(dadosParaAtualizar)
       .returning("*");
@@ -68,7 +67,7 @@ async function atualizarLutadorService(idLutador, dados) {
 
 async function deletarLutadorService(idLutador) {
   try {
-    const resultado = await db(TABLE).where("id_lutador", idLutador).del();
+    const resultado = await database(TABLE).where("id_lutador", idLutador).del();
 
     if (resultado === 0) {
       throw new Error("Lutador não encontrado para exclusão.");
