@@ -4,11 +4,30 @@ const TABLE = "lutadores";
 
 async function criarLutadorService(dados) {
   try {
-    const modalidadesString = JSON.stringify(dados.modalidade);
+    const modalidadesString = JSON.stringify(dados.modalidades);
+
+    const existente = await database("lutadores")
+      .where("id_usuario", dados.id_usuario)
+      .first();
+
+    if (existente) {
+      const resultado = await database("lutadores")
+        .where("id_usuario", dados.id_usuario)
+        .update({
+          nome: dados.nome,
+          cidade: dados.cidade,
+          estado: dados.estado,
+          img: dados.img,
+          peso: dados.peso,
+          modalidades: modalidadesString,
+        })
+        .returning("*");
+      return resultado[0];
+    }
 
     const resultado = await database("lutadores")
       .insert({
-        id_usuario: dados.userId,
+        id_usuario: dados.id_usuario,
         nome: dados.nome,
         cidade: dados.cidade,
         estado: dados.estado,
@@ -20,9 +39,10 @@ async function criarLutadorService(dados) {
     return resultado[0];
   } catch (error) {
     console.error("Erro ao criar o dado de lutador: ", error);
-    throw new Error("Não foi possível criar o ltador no banco de dados.");
+    throw new Error("Não foi possível criar o lutador no banco de dados.");
   }
 }
+
 
 async function listarLutadoresService() {
   try {
@@ -65,15 +85,15 @@ async function atualizarLutadorService(idLutador, dados) {
   }
 }
 
-async function deletarLutadorService(idLutador) {
+async function deletarLutadorService(id_usuario) {
   try {
-    const resultado = await database(TABLE).where("id_lutador", idLutador).del();
+    const resultado = await database(TABLE).where("id_usuario", id_usuario).del();
 
     if (resultado === 0) {
       throw new Error("Lutador não encontrado para exclusão.");
     }
 
-    return resultado;
+    return "lutador deletado";
   } catch (error) {
     console.error("Erro ao deletar o lutador: ", error);
     throw new Error(error.message);

@@ -8,16 +8,14 @@ const {
 async function criarLutadorController(req, res) {
   try {
     const dados = req.body;
-
-    const novoLutador = await criarLutadorService(dados);
-
+    const id_usuario = req.user.id;  // <- pega do JWT
+    const novoLutador = await criarLutadorService({ ...dados, id_usuario });
     return res.status(201).json(novoLutador);
   } catch (error) {
     console.error("Erro no Controller de lutadores (criar lutadores): ", error);
     return res.status(500).json({ mensagem: error.message });
   }
 }
-
 async function listarLutadoresController(req, res) {
   try {
     const listaLutadores = await listarLutadoresService();
@@ -51,10 +49,10 @@ async function atualizarLutadorController(req, res) {
 
 async function deletarLutadorController(req, res) {
   try {
-    const idLutador = req.params.id;
+    const id_usuario = req.user.id;
 
-    const resultado = await deletarLutadorService(idLutador);
-
+    const resultado = await deletarLutadorService(id_usuario);
+    
     return res.status(200).json(resultado);
   } catch (error) {
     console.error("Erro no Controller de lutadores (deletar lutador):", error);
