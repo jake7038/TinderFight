@@ -49,15 +49,14 @@ export const criarUsuario = createAsyncThunk<
 )
 
 export const atualizarUsuario = createAsyncThunk<
-    Usuario,
-    { id: string; dados: Partial<Usuario> },
+    void,
+    { email?: string; senha?: string },
     { rejectValue: string }
 >(
     'usuario/atualizarUsuario',
-    async ({ id, dados }, { rejectWithValue }) => {
+    async (dados, { rejectWithValue }) => {
         const token = localStorage.getItem('token')
-
-        const res = await fetch(`${API_URL}/usuario/${id}`, {
+        const res = await fetch(`${API_URL}/usuario`, {  // <- sem /${id}
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -66,15 +65,10 @@ export const atualizarUsuario = createAsyncThunk<
             body: JSON.stringify(dados)
         })
 
-        const data: Usuario & { mensagem?: string } = await res.json()
-
         if (!res.ok) {
-            return rejectWithValue(
-                data.mensagem ?? 'Erro ao atualizar usuário.'
-            )
+            const data = await res.json()
+            return rejectWithValue(data.mensagem ?? 'Erro ao atualizar usuário.')
         }
-
-        return data
     }
 )
 
@@ -87,7 +81,7 @@ export const deletarUsuario = createAsyncThunk<
     async (id, { rejectWithValue }) => {
         const token = localStorage.getItem('token')
 
-        const res = await fetch(`${API_URL}/usuario/${id}`, {
+        const res = await fetch(`${API_URL}/usuario`, {
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`

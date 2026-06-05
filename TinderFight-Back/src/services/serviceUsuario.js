@@ -30,4 +30,46 @@ async function buscarUsuario(id_usuario) {
   return usuario;
 }
 
-module.exports = { criarUsuario, buscarUsuario };
+async function atualizarUsuario(id, { email, senha }) {
+  const usuario = await database(TABLE).where("id_usuario", id).first();
+ 
+  if (!usuario) {
+    const erro = new Error("Usuário não encontrado.");
+    erro.status = 404;
+    throw erro;
+  }
+ 
+  if (email && email !== usuario.email) {
+    const emailEmUso = await database(TABLE).where({ email }).first();
+    if (emailEmUso) {
+      const erro = new Error("E-mail já cadastrado.");
+      erro.status = 409;
+      throw erro;
+    }
+  }
+ 
+  const dados = {};
+  if (email) dados.email = email;
+  if (senha) dados.senha = await bcrypt.hash(senha, 10);
+ 
+  await database(TABLE).where("id_usuario", id).update(dados);
+}
+ 
+async function deletarUsuario(id) {
+  const usuario = await database(TABLE).where("id_usuario", id).first();
+ 
+  if (!usuario) {
+    const erro = new Error("Usuário não encontrado.");
+    erro.status = 404;
+    throw erro;
+  }
+ 
+  await database(TABLE).where("id_usuario", id).delete();
+}
+
+module.exports = {
+    criarUsuario,
+    buscarUsuario,
+    atualizarUsuario,
+    deletarUsuario,
+};

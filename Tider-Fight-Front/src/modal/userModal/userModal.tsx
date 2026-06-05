@@ -49,9 +49,9 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
 
     const [userPrefs, setUserPrefs] = useState<Partial<Lutador>>({
         nome: "",
-        modalidade: [],
+        modalidades: [],
         img: "/charles.png",
-        userId: usuario?.id,
+        userId: usuario?.id_usuario,
         peso: 80,
         cidade: "",
         estado: "",
@@ -68,7 +68,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
 
             setUserPrefs(prev => ({
                 ...prev,
-                userId: usuario.id
+                userId: usuario.id_usuario
             }));
         }
     }, [usuario]);
@@ -78,38 +78,35 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
     const toggleMyModality = (mod: string) => {
         setUserPrefs(prev => ({
             ...prev,
-            modalidade: prev.modalidade?.includes(mod)
-                ? prev.modalidade.filter(m => m !== mod)
-                : [...(prev.modalidade || []), mod],
+            modalidades: prev.modalidades?.includes(mod)
+                ? prev.modalidades.filter(m => m !== mod)
+                : [...(prev.modalidades || []), mod],
         }));
     };
 
     const handleExcluir = () => {
-        dispatch(deletarUsuario(usuario.id));
+        dispatch(deletarUsuario(usuario.id_usuario));
         onClose();
         nav("/");
     };
 
     const handleSave = () => {
         dispatch(atualizarUsuario({
-            id: usuario.id,
-            dados: {
-                email: user.email,
-                senha: user.senha
-            }
-        }));
+            email: user.email,
+            senha: user.senha
+        }))
         if(!incognito){
             dispatch(criarLutador({
-            userId: usuario.id,
+            userId: usuario.id_usuario,
             img: "/charles.png",
             nome: userPrefs.nome,
             cidade: userPrefs.cidade,
             estado: userPrefs.estado,
-            modalidade: userPrefs.modalidade,
+            modalidades: userPrefs.modalidades,
             peso: userPrefs.peso
         }));
         }else{
-            dispatch(deletarLutador(usuario.id))
+            dispatch(deletarLutador(usuario.id_usuario))
         }
         
 
@@ -242,7 +239,7 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
                                 {MY_MODALITIES.map(mod => (
                                     <button
                                         key={mod}
-                                        className={`sm-tag ${userPrefs.modalidade?.includes(mod) ? "sm-tag--active" : ""}`}
+                                        className={`sm-tag ${userPrefs.modalidades?.includes(mod) ? "sm-tag--active" : ""}`}
                                         onClick={() => toggleMyModality(mod)}
                                     >
                                         {mod}

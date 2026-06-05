@@ -33,7 +33,7 @@ export const getConversas = createAsyncThunk<
 )
 
 export const criarConversa = createAsyncThunk<
-    Conversas,
+    Conversas | null,
     { id_usuario2: string },
     { rejectValue: string }
 >(
@@ -41,22 +41,23 @@ export const criarConversa = createAsyncThunk<
     async ({ id_usuario2 }, { getState, rejectWithValue }) => {
         const token = getToken(getState)
 
-        const res = await fetch(`${BASE_URL}/conversa`, {
+        const res = await fetch(`${BASE_URL}/fight`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${token}`
             },
-            body: JSON.stringify({ id_usuario2 })
+            body: JSON.stringify({ id_usuario_alvo: id_usuario2 })
         })
 
         const data = await res.json()
 
         if (!res.ok) {
-            return rejectWithValue(data.mensagem ?? 'Erro ao criar conversa.')
+            return rejectWithValue(data.mensagem ?? 'Erro ao registrar like.')
         }
 
-        return data as Conversas
+        // Se houve match o server retorna a conversa, senão retorna null
+        return data.match ? (data.conversa as Conversas) : null
     }
 )
 

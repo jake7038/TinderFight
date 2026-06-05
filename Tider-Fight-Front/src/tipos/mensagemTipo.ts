@@ -1,5 +1,5 @@
 export type Mensagem = {
-    id: string,
+    id_mensagem: string,
     conversaid: string,
     text: string,
     sender: string,

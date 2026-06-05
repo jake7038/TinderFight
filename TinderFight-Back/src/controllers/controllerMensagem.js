@@ -3,10 +3,9 @@ const mensagemService = require("../services/mensagemService");
 async function listarMensagens(req, res) {
   try {
     const idUsuario = req.user.id;
-    const { idConversa } = req.params;
-
+    const { idconversa } = req.params;
     const mensagens = await mensagemService.listarMensagens(
-      idConversa,
+      idconversa,
       idUsuario
     );
 
@@ -46,7 +45,7 @@ async function buscarMensagemPorId(req, res) {
 async function criarMensagem(req, res) {
   try {
     const idUsuario = req.user.id;
-    const { idConversa } = req.params;
+    const idConversa = Number(req.params.idconversa);
     const { texto_mensagem } = req.body;
 
     if (!texto_mensagem || texto_mensagem.trim() === "") {

@@ -2,8 +2,7 @@ const conversaService = require("../services/serviceConversa");
 
 async function listarConversas(req, res) {
   try {
-    const idUsuario = req.user.id;
- 
+    const idUsuario = Number(req.user.id);
     const conversas = await conversaService.listarConversas(idUsuario);
  
     return res.status(200).json(conversas);
@@ -37,7 +36,7 @@ async function criarConversa(req, res) {
   try {
     const idUsuario1 = req.user.id;
     const { id_usuario2 } = req.body;
- 
+    
     if (!id_usuario2) {
       return res
         .status(400)

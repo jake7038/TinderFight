@@ -13,6 +13,6 @@ const router = express.Router();
 router.post("/", autenticarToken, criarLutadorController);
 router.get("/", autenticarToken, listarLutadoresController);
 router.patch("/:id", autenticarToken, atualizarLutadorController);
-router.delete("/:id", autenticarToken, deletarLutadorController);
+router.delete("/", autenticarToken, deletarLutadorController);
 
 module.exports = router;

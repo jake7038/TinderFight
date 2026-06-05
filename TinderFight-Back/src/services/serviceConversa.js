@@ -3,10 +3,34 @@ const database = require("../database/export");
 const TABLE = "conversa";
 
 async function listarConversas(idUsuario) {
-    return database(TABLE)
-    .where("id_usuario1", idUsuario)
-    .orWhere("id_usuario2", idUsuario)
-    .orderBy("updated_at", "desc");
+    const conversas = await database(TABLE)
+        .where("id_usuario1", idUsuario)
+        .orWhere("id_usuario2", idUsuario);
+
+    const resultado = await Promise.all(
+        conversas.map(async (conversa) => {
+        const matchId =
+            conversa.id_usuario1 === idUsuario
+            ? conversa.id_usuario2
+            : conversa.id_usuario1;
+
+        const lutadorMatch = await database("lutadores")
+            .where("id_usuario", matchId)
+            .select("nome", "img")
+            .first();
+
+        return {
+            id: String(conversa.id_conversa),
+            usuarioId: String(idUsuario),
+            matchId: String(matchId),
+            matchNome: lutadorMatch?.nome ?? "Lutador",
+            image: lutadorMatch?.img ?? "",
+            lastMessage: conversa.ultimamensagem ?? "",
+        };
+        })
+    );
+
+    return resultado;
 }
 
 async function buscarConversaPorId(idConversa, idUsuario) {
