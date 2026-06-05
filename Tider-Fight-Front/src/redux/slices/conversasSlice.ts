@@ -24,7 +24,9 @@ const conversasSlice = createSlice({
             conversasAdapter.setAll(state, action.payload)
         })
         .addCase(criarConversa.fulfilled, (state, action) => {
-            conversasAdapter.addOne(state, action.payload)
+            if (action.payload) { 
+                conversasAdapter.addOne(state, action.payload)
+            }
         })
         .addCase(deletarConversa.fulfilled, (state, action) => {
             conversasAdapter.removeOne(state, action.payload)

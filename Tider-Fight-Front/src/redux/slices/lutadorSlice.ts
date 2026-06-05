@@ -4,7 +4,7 @@ import { RootState } from '../store'
 import { fetchLutadores, criarLutador, atualizarLutador, deletarLutador } from '../requisicoes/lutadorThunk'
 
 const lutadoresAdapter = createEntityAdapter<Lutador, string>({
-    selectId: (lutador) =>  lutador.id
+    selectId: (lutador) => lutador.id_lutador
 })
 
 const initialState = lutadoresAdapter.getInitialState()

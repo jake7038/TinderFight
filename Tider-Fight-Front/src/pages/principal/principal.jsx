@@ -24,18 +24,11 @@ export function Principal() {
 
     const next = () => {
         if (!lutadores[0]) return
-        dispatch(removerLutador(lutadores[0].id))
+        dispatch(removerLutador(lutadores[0].id_lutador))
     }
 
     const match = () => {
-        dispatch(criarConversa(
-            {
-                usuarioId: usuario.id,
-                matchId: lutadores[0].userId,
-                matchNome: lutadores[0].nome,
-                image: lutadores[0].img
-            }
-        ))
+        dispatch(criarConversa({ id_usuario2: String(lutadores[0].id_usuario) }))
         next()
     }
     
@@ -70,7 +63,7 @@ export function Principal() {
                         <div className="place_fighter">
                             <p> <img src="/pontogps.png" alt="" /> {lutadores[0].cidade}, {lutadores[0].estado}</p>
                             <div className="category">
-                                {lutadores[0].modalidade.map(mod => (
+                                {lutadores[0].modalidades.map(mod => (
                                 <p key={mod}>{mod}</p>
                                 ))}
                             </div>
