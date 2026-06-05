@@ -1,56 +1,111 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { Mensagem } from "../../tipos/mensagemTipo"
+import { RootState } from "../store"
 
-const URL = "http://localhost:8000/mensagens"
+const BASE_URL = import.meta.env.VITE_SERVER
 
-export const getMensagens = createAsyncThunk(
+function getToken(getState: () => unknown): string {
+    const state = getState() as RootState
+    return localStorage.getItem('token') ?? ''
+}
+
+export const getMensagens = createAsyncThunk<
+    Mensagem[],
+    string,
+    { rejectValue: string }
+>(
     "mensagens/fetchMensagens",
-    async (conversaid: string) => {
-        const res = await fetch(`${URL}?conversaid=${conversaid}`)
+    async (idConversa, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${BASE_URL}/conversas/${idConversa}/mensagens`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+
         const data = await res.json()
-        
-        return data.map((m: any) => ({
-            ...m,
-            time: new Date(m.time).toISOString()
-        }))
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao buscar mensagens.')
+        }
+
+        return data as Mensagem[]
     }
 )
 
-export const criarMensagem = createAsyncThunk(
+export const criarMensagem = createAsyncThunk<
+    Mensagem,
+    { idConversa: string; texto_mensagem: string },
+    { rejectValue: string }
+>(
     "mensagens/criarMensagem",
-    async (dados: Partial<Mensagem>) => {
-        const res = await fetch(URL, {
+    async ({ idConversa, texto_mensagem }, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${BASE_URL}/conversas/${idConversa}/mensagens`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                ...dados,
-                time: new Date().toISOString()
-            })
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ texto_mensagem })
         })
 
-        return await res.json()
+        const data = await res.json()
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao enviar mensagem.')
+        }
+
+        return data as Mensagem
     }
 )
 
-export const editarMensagem = createAsyncThunk(
+export const editarMensagem = createAsyncThunk<
+    Mensagem,
+    { id: string; texto_mensagem: string },
+    { rejectValue: string }
+>(
     "mensagens/editarMensagem",
-    async ({ id, dados }: { id: string, dados: Partial<Mensagem> }) => {
-        const res = await fetch(`${URL}/${id}`, {
+    async ({ id, texto_mensagem }, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${BASE_URL}/mensagens/${id}`, {
             method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(dados)
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            },
+            body: JSON.stringify({ texto_mensagem })
         })
 
-        return await res.json()
+        const data = await res.json()
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao editar mensagem.')
+        }
+
+        return data as Mensagem
     }
 )
 
-export const deletarMensagem = createAsyncThunk(
+export const deletarMensagem = createAsyncThunk<
+    string,
+    string,
+    { rejectValue: string }
+>(
     "mensagens/deletarMensagem",
-    async (id: string) => {
-        await fetch(`${URL}/${id}`, {
-            method: "DELETE"
+    async (id, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${BASE_URL}/mensagens/${id}`, {
+            method: "DELETE",
+            headers: { "Authorization": `Bearer ${token}` }
         })
+
+        if (!res.ok) {
+            const data = await res.json()
+            return rejectWithValue(data.mensagem ?? 'Erro ao deletar mensagem.')
+        }
 
         return id
     }
