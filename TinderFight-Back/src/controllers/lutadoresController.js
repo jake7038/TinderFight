@@ -18,7 +18,8 @@ async function criarLutadorController(req, res) {
 }
 async function listarLutadoresController(req, res) {
   try {
-    const listaLutadores = await listarLutadoresService();
+    const idUsuario = req.user.id;
+    const listaLutadores = await listarLutadoresService(idUsuario);
 
     return res.status(200).json(listaLutadores);
   } catch (error) {

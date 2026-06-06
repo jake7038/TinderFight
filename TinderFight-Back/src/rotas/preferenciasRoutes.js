@@ -11,8 +11,8 @@ const {
 const router = express.Router();
 
 router.post("/", autenticarToken, criarPreferenciaController);
-router.get("/:id", autenticarToken, listarPreferenciasController);
-router.patch("/:id", autenticarToken, atualizarPreferenciasController);
+router.get("/", autenticarToken, listarPreferenciasController);
+router.patch("/", autenticarToken, atualizarPreferenciasController);
 router.delete("/:id", autenticarToken, deletarPreferenciasController);
 
 module.exports = router;
