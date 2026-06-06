@@ -5,12 +5,11 @@ const TABLE = "preferencias";
 
 async function criarPreferenciaService(dados) {
   try {
-    const modalidadesString = JSON.stringify(dados.modalidade);
+    const modalidadesString = JSON.stringify(dados.modalidades);
 
     const resultado = await database(TABLE)
       .insert({
-        id_usuario: dados.userId,
-        img: dados.img,
+        id_usuario: dados.id_usuario,
         cidade: dados.cidade,
         estado: dados.estado,
         peso: dados.peso,
@@ -42,20 +41,18 @@ async function listarPreferenciasService(idPreferencia) {
   }
 }
 
-async function atualizarPreferenciasService(idPreferencia, dados) {
+async function atualizarPreferenciasService(id_usuario, dados) {
   try {
     const dadosParaAtualizar = {};
-
-    if (dados.img) dadosParaAtualizar.img = dados.img;
     if (dados.cidade) dadosParaAtualizar.cidade = dados.cidade;
     if (dados.estado) dadosParaAtualizar.estado = dados.estado;
-    if (dados.modalidade) {
-      dadosParaAtualizar.modalidades = JSON.stringify(dados.modalidade);
+    if (dados.modalidades) {
+        dadosParaAtualizar.modalidades = JSON.stringify(dados.modalidades);
     }
     if (dados.peso) dadosParaAtualizar.peso = dados.peso;
 
     const resultado = await database(TABLE)
-      .where("id_preferencia", idPreferencia)
+      .where("id_usuario", id_usuario)
       .update(dadosParaAtualizar)
       .returning("*");
 

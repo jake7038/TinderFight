@@ -215,7 +215,7 @@ exports.seed = async function (knex) {
       estado: "AL",
       img: "https://ufc.com/images/styles/background_image_sm/s3/2023-10/102623-hero-alex-pereira_GettyImages-1579885807.jpg?h=d1cb525d&itok=32lc3-ct",
       peso: 93.0,
-      modalidades: JSON.stringify(["MMA", "Muay Thai", "Boxe", "Capoeira", "Jiu Jitsu"]),
+      modalidades: JSON.stringify(["MMA", "Muay Thai", "Boxe",  "Jiu Jitsu"]),
       id_usuario: ids[19],
     },
   ]);

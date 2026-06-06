@@ -50,6 +50,10 @@ async function criarMensagem(idConversa, idUsuario, texto) {
     })
     .returning("id_mensagem");
 
+  await database("conversa")
+    .where("id_conversa", idConversa)
+    .update({ ultimamensagem: texto });
+
   return database(TABLE)
     .where("id_mensagem", id?.id_mensagem ?? id)
     .first();

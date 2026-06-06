@@ -44,10 +44,11 @@ async function criarLutadorService(dados) {
 }
 
 
-async function listarLutadoresService() {
+async function listarLutadoresService(idUsuario) {
   try {
-    const lutadores = await database(TABLE).select("*");
-
+    const lutadores = await database(TABLE)
+      .select("*")
+      .whereNot("id_usuario", idUsuario); 
     return lutadores;
   } catch (error) {
     console.error("Erro ao ler os lutadores: ", error);

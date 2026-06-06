@@ -7,44 +7,36 @@ const {
 
 async function criarPreferenciaController(req, res) {
   try {
-    const dados = req.body;
-
-    const novaPreferencia = await criarPreferenciaService(dados);
-
-    return res.status(201).json(novaPreferencia);
+    const id_usuario = req.user.id
+    const dados = { ...req.body, id_usuario }
+    const novaPreferencia = await criarPreferenciaService(dados)
+    return res.status(201).json(novaPreferencia)
   } catch (error) {
-    console.error("Erro no Controller de preferências (criar):", error);
-    return res.status(500).json({ mensagem: error.message });
+    console.error("Erro no Controller de preferências (criar):", error)
+    return res.status(500).json({ mensagem: error.message })
   }
 }
 
 async function listarPreferenciasController(req, res) {
   try {
-    const idPreferencia = req.params.id;
-
-    const preferencias = await listarPreferenciasService(idPreferencia);
-
-    return res.status(200).json(preferencias);
+    const id_usuario = req.user.id
+    const preferencias = await listarPreferenciasService(id_usuario)
+    return res.status(200).json(preferencias)
   } catch (error) {
-    console.error("Erro no Controller de preferências (listar):", error);
-    return res.status(500).json({ mensagem: error.message });
+    console.error("Erro no Controller de preferências (listar):", error)
+    return res.status(500).json({ mensagem: error.message })
   }
 }
 
 async function atualizarPreferenciasController(req, res) {
   try {
-    const dados = req.body;
-    const idPreferencia = req.params.id;
-
-    const preferenciaAtualizada = await atualizarPreferenciasService(
-      idPreferencia,
-      dados,
-    );
-
-    return res.status(200).json(preferenciaAtualizada);
+    const id_usuario = req.user.id
+    const dados = req.body
+    const preferenciaAtualizada = await atualizarPreferenciasService(id_usuario, dados)
+    return res.status(200).json(preferenciaAtualizada)
   } catch (error) {
-    console.error("Erro no Controller de preferências (atualizar):", error);
-    return res.status(500).json({ mensagem: error.message });
+    console.error("Erro no Controller de preferências (atualizar):", error)
+    return res.status(500).json({ mensagem: error.message })
   }
 }
 
