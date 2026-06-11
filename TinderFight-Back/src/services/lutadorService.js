@@ -46,9 +46,22 @@ async function criarLutadorService(dados) {
 
 async function listarLutadoresService(idUsuario) {
   try {
+    const preferencia = await database("preferencias")
+      .where("id_usuario", idUsuario)
+      .first();
+
+    if (!preferencia) {
+      throw new Error("Preferências do usuário não encontradas.");
+    }
+
+    const { peso, modalidades } = preferencia;
+
     const lutadores = await database(TABLE)
       .select("*")
-      .whereNot("id_usuario", idUsuario); 
+      .whereNot("id_usuario", idUsuario)
+      .where("peso", "<=", peso)
+      .whereRaw("modalidades \\?| ?::text[]", [modalidades]);
+
     return lutadores;
   } catch (error) {
     console.error("Erro ao ler os lutadores: ", error);

@@ -8,7 +8,7 @@ const {
 async function criarLutadorController(req, res) {
   try {
     const dados = req.body;
-    const id_usuario = req.user.id;  // <- pega do JWT
+    const id_usuario = req.user.id; 
     const novoLutador = await criarLutadorService({ ...dados, id_usuario });
     return res.status(201).json(novoLutador);
   } catch (error) {
