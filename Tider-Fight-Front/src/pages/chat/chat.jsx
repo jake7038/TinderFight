@@ -17,6 +17,18 @@ export default function Chat() {
     const foto = location.state?.foto
     const usuario = useAppSelector(state => state.usuario)
 
+    function getIdDoToken() {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+        return null;
+    }
+
+    const payload = JSON.parse(atob(token.split('.')[1]));
+
+    return payload.id; 
+    }
+
     useEffect(() => {
         if (conversaId == null|| nomeMatch == null) return 
         dispatch(getMensagens(conversaId))
@@ -31,14 +43,13 @@ export default function Chat() {
         if (!texto.trim()) return
 
         dispatch(criarMensagem({
-            conversaid: conversaId,
-            text: texto,
-            sender: usuario.id,
+            idConversa: conversaId,
+            texto_mensagem: texto,
         }))
 
         setTexto("")
     }
-
+    const meuId = getIdDoToken()
     return (
         <div className="chat-container">
             <div className="chat-header">
@@ -50,14 +61,14 @@ export default function Chat() {
             </div>
             <div className="chat-body">
                 {mensagens.map((msg) => (
-                    <div key={msg.id} className={`message-row ${msg.sender === usuario.id ? "me" : "other"}`}>
-                        {msg.sender != usuario.id && <img src={foto} className="avatar small" />}
-                        <div className="message-bubble">{msg.text}</div>
+                    <div key={msg.id_mensagem} className={`message-row ${Number(msg.sender) === Number(meuId) ? "me" : "other"}`}>
+                        {Number(msg.sender) !== Number(meuId) && <img src={foto} className="avatar small" />}
+                        <div className="message-bubble">{msg.texto_mensagem}</div>
                     </div>
                 ))}
             </div>
             <div className="chat-input">
-                <input value={texto} onChange={(e) => setTexto(e.target.value)} placeholder="Digite uma mensagem..." />
+                <input value={texto} onKeyDown={(e) => e.key === 'Enter' && enviarMensagem()} onChange={(e) => setTexto(e.target.value)} placeholder="Digite uma mensagem..." />
                 <button onClick={enviarMensagem}>Enviar</button>
             </div>
         </div>

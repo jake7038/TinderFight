@@ -3,9 +3,9 @@ import { Mensagem } from '../../tipos/mensagemTipo'
 import { RootState } from '../store'
 import { getMensagens, criarMensagem, deletarMensagem , editarMensagem } from '../requisicoes/mensagemThunk'
 
-const mensagensAdapter = createEntityAdapter<Mensagem, string>({
-    selectId: (m: Mensagem) => m.id,
-    sortComparer: (a, b) => new Date(a.time).getTime() - new Date(b.time).getTime()
+const mensagensAdapter = createEntityAdapter<Mensagem, number>({  // <- era string
+    selectId: (m: Mensagem) => m.id_mensagem,
+    sortComparer: (a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
 })
 
 const initialState = mensagensAdapter.getInitialState()

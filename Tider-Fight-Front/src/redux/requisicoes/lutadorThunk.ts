@@ -96,7 +96,7 @@ export const deletarLutador = createAsyncThunk<
     async (id, { getState, rejectWithValue }) => {
         const token = getToken(getState)
 
-        const res = await fetch(`${URL}/lutadores/${id}`, {
+        const res = await fetch(`${URL}/lutadores/`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         })
