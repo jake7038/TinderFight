@@ -30,9 +30,7 @@ function Conversa  () {
 
 
     useEffect(() => {
-        if (!usuario?.id) return
-
-        dispatch(getConversas(usuario.id))
+        dispatch(getConversas())
     }, [usuario, dispatch])    
     
     
