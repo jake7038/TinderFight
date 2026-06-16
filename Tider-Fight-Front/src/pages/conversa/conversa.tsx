@@ -5,8 +5,18 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../redux/hookers";
 import "./conversa.css"
 
+interface ConversaProps {
+    onOpenChat?: (dados: { conversaId: string; nomeMatch: string; foto: string }) => void
+}
 
-function Conversa  () {
+function Conversa({ onOpenChat }: ConversaProps) {
+    const GoChat = (conversaId: string, nomeMatch: string, foto: string) => {
+        if (onOpenChat) {
+            onOpenChat({ conversaId, nomeMatch, foto }) 
+        } else {
+            nav("/chat", { state: { conversaId, nomeMatch, foto } }) 
+        }
+    }
 
     const nav = useNavigate()
     const dispatch = useAppDispatch()
@@ -20,9 +30,6 @@ function Conversa  () {
     nav("/lutadores")
     }
 
-    const GoChat = (conversaId: string, nomeMatch: string, foto: string) => {
-        nav("/chat", { state: { conversaId, nomeMatch, foto }  })
-    }
 
     const deletarMatch = (id: string) => {
         dispatch(deletarConversa(id))
