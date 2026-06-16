@@ -1,78 +1,111 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Lutador } from '../../tipos/lutadorTipo'
-import { useAppSelector } from '../hookers'
+import { RootState } from '../store'
 
-const URL = 'http://localhost:8000/lutadores'
+const URL = import.meta.env.VITE_SERVER
 
-export const fetchLutadores = createAsyncThunk(
+function getToken(getState: () => unknown): string {
+    return  localStorage.getItem('token') ?? ''
+}
+
+export const fetchLutadores = createAsyncThunk<
+    Lutador[],
+    void,
+    { rejectValue: string }
+>(
     'lutadores/fetchLutadores',
-    async (userId: string) => {
-        const res = await fetch(URL)
+    async (_, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${URL}/lutadores`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+
         const data = await res.json()
-        return data.filter((l: Lutador) => l.userId !== userId)
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao buscar lutadores.')
+        }
+
+        return data as Lutador[]
     }
 )
 
-export const criarLutador = createAsyncThunk(
+export const criarLutador = createAsyncThunk<
+    Lutador,
+    Partial<Lutador>,
+    { rejectValue: string }
+>(
     'lutadores/criarLutador',
-    async (dados: Partial<Lutador>, thunkAPI) => {
-        console.log(dados.userId)
-        const resCheck = await fetch(`${URL}?userId=${String(dados.userId)}`)
-        const res = await resCheck.json()
-        console.log(res.length)
-        if (res.length > 0) {
-        const atualizacao = await thunkAPI.dispatch(atualizarLutador({ id: res[0].id, dados }))
-        return atualizacao.payload
+    async (dados, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
 
-        }else{
-            const res = await fetch(URL, {
+        const res = await fetch(`${URL}/lutadores`, {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(dados)
         })
 
-        return await res.json()
+        const data = await res.json()
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao criar lutador.')
         }
-        
+
+        return data as Lutador
     }
 )
 
-export const atualizarLutador = createAsyncThunk(
+export const atualizarLutador = createAsyncThunk<
+    Lutador,
+    { id: string; dados: Partial<Lutador> },
+    { rejectValue: string }
+>(
     'lutadores/atualizarLutador',
-    async ({ id, dados }: { id: string, dados: Partial<Lutador> }) => {
-        const res = await fetch(`${URL}/${id}`, {
+    async ({ id, dados }, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
+
+        const res = await fetch(`${URL}/lutadores/${id}`, {
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify(dados)
         })
-        
-        return await res.json()
+
+        const data = await res.json()
+
+        if (!res.ok) {
+            return rejectWithValue(data.mensagem ?? 'Erro ao atualizar lutador.')
+        }
+
+        return data as Lutador
     }
 )
 
-
-export const deletarLutador = createAsyncThunk(
+export const deletarLutador = createAsyncThunk<
+    string,
+    string,
+    { rejectValue: string }
+>(
     'lutadores/deletarLutador',
-    async (userId: string) => {
-        console.log("userId:", userId)
+    async (id, { getState, rejectWithValue }) => {
+        const token = getToken(getState)
 
-        const res = await fetch(`${URL}?userId=${userId}`)
-        const lista = await res.json()
+        const res = await fetch(`${URL}/lutadores/`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
 
-        if (lista.length > 0) {
-            const id = lista[0].id
-
-            await fetch(`${URL}/${id}`, {
-                method: 'DELETE'
-            })
-
-            return id
+        if (!res.ok) {
+            const data = await res.json()
+            return rejectWithValue(data.mensagem ?? 'Erro ao deletar lutador.')
         }
 
-        return null
+        return id
     }
 )

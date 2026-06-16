@@ -1,10 +1,10 @@
 export type Lutador = {
-    id: string,
+    id_lutador: string,
     img: string,
-    userId: string,
+    id_usuario: string,
     nome: string,
     cidade: string,
     estado: string,
-    modalidade: string[]
+    modalidades: string[]
     peso: number
 }

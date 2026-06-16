@@ -1,59 +1,101 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { Usuario } from '../../tipos/usuarioTipo'
 
-const API_URL = 'http://localhost:8000/usuarios'
+const API_URL = import.meta.env.VITE_SERVER
 
-export const fetchUsuario = createAsyncThunk(
+export const fetchUsuario = createAsyncThunk <string, { email: string; senha: string },{ rejectValue: string } >(
     'usuario/fetchUsuario',
-    async ({ email, senha }: { email: string; senha: string }) => {
+    async ({ email, senha }: { email: string; senha: string }, { rejectWithValue  }) => {
+        const res = await fetch(`${API_URL}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, senha })
+        })
 
-        const res = await fetch(`${API_URL}?email=${email}`)
-        const data: Usuario[] = await res.json()
+        const data = await res.json()
 
-        const usuario = data.find(u => u.senha === senha)
-
-        if (!usuario) {
-            throw new Error('Email ou senha inválidos')
+        if (!res.ok) {
+            return rejectWithValue (data.mensagem ?? 'Erro ao fazer login.')
         }
 
-        return usuario
+        localStorage.setItem('token', data.token)
+        return data.token
     }
 )
 
-export const criarUsuario = createAsyncThunk(
+export const criarUsuario = createAsyncThunk<
+    Usuario,
+    Omit<Usuario, 'id'>,
+    { rejectValue: string }
+>(
     'usuario/criarUsuario',
-    async (novoUsuario: Omit<Usuario, 'id'>) => {
-        const res = await fetch(API_URL, {
+    async (novoUsuario, { rejectWithValue }) => {
+        const res = await fetch(`${API_URL}/usuario`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(novoUsuario)
         })
-        return await res.json()
+
+        const data: Usuario & { mensagem?: string } = await res.json()
+
+        if (!res.ok) {
+            return rejectWithValue(
+                data.mensagem ?? 'Erro ao criar usuário.'
+            )
+        }
+
+        return data
     }
 )
 
-export const atualizarUsuario = createAsyncThunk(
+export const atualizarUsuario = createAsyncThunk<
+    void,
+    { email?: string; senha?: string },
+    { rejectValue: string }
+>(
     'usuario/atualizarUsuario',
-    async ({ id, dados }: { id: string; dados: Partial<Usuario> }) => {
-        const res = await fetch(`${API_URL}/${id}`, {
+    async (dados, { rejectWithValue }) => {
+        const token = localStorage.getItem('token')
+        const res = await fetch(`${API_URL}/usuario`, {  // <- sem /${id}
             method: 'PATCH',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${token}`
             },
             body: JSON.stringify(dados)
         })
 
-        return await res.json()
+        if (!res.ok) {
+            const data = await res.json()
+            return rejectWithValue(data.mensagem ?? 'Erro ao atualizar usuário.')
+        }
     }
 )
 
-
-export const deletarUsuario = createAsyncThunk(
+export const deletarUsuario = createAsyncThunk<
+    string,
+    string,
+    { rejectValue: string }
+>(
     'usuario/deletarUsuario',
-    async (id: string) => {
-        await fetch(`${API_URL}/${id}`, {
-            method: 'DELETE'
+    async (id, { rejectWithValue }) => {
+        const token = localStorage.getItem('token')
+
+        const res = await fetch(`${API_URL}/usuario`, {
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
         })
+
+        if (!res.ok) {
+            const data: { mensagem?: string } = await res.json()
+
+            return rejectWithValue(
+                data.mensagem ?? 'Erro ao deletar usuário.'
+            )
+        }
+
         return id
     }
 )

@@ -66,6 +66,21 @@
 }
 
 
+.sm-select {
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    border: 1px solid var(--border);
+    margin-top: 4px;
+}
+
+.sm-select:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
 sm-col {
   flex: 1;
   min-width: 0; 

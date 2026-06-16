@@ -8,18 +8,26 @@ import Chat from './pages/chat/chat'
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
 import Conversa from './pages/conversa/conversa'
+import { DesktopLayout } from './pages/DesktopLayout/DesktopLayout'
+
+function useIsDesktop() {
+    return window.innerWidth >= 900
+}
 
 createRoot(document.getElementById('root')).render(
-
-    <StrictMode >
+    <StrictMode>
         <Provider store={store}>
             <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/lutadores" element={<Principal />} />
-                <Route path="/conversas" element={<Conversa />} />
-                <Route path="/chat" element={<Chat/>} />
-            </Routes>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                    <Route path="/lutadores" element={
+                        window.innerWidth >= 900 ? <DesktopLayout /> : <Principal />
+                    } />
+                    <Route path="/conversas" element={
+                        window.innerWidth >= 900 ? <DesktopLayout /> : <Conversa />
+                    } />
+                    <Route path="/chat" element={<Chat />} />
+                </Routes>
             </BrowserRouter>
         </Provider>
     </StrictMode>
