@@ -12,7 +12,7 @@ const app = express()
 
 app.use(
     cors({
-    origin: process.env.SeRVER_FRONT
+    origin: process.env.SERVER_FRONT
     })
 )
 const host = process.env.LOCAL_HOST

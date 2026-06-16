@@ -14,6 +14,7 @@ module.exports = {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
     },
+    searchPath: ["public"],
     migrations: {
       directory: "./src/database/migrations",
     },
