@@ -55,7 +55,7 @@ export function Principal() {
 
             <div
                 className="card"
-                style={{ backgroundImage: lutadores[0]?.img ? `url(${lutadores[0].img})` : 'none' }}
+                style={{ backgroundImage: lutadores[0]?.img ? `url(${lutadores[0].img})` : "none" }}
             >
                 {!lutadores[0] ? (
                     <p className="carregando">
