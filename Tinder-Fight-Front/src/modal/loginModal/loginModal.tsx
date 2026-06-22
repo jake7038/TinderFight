@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../../redux/hookers";
 import { fetchUsuario } from "../../redux/requisicoes/usuarioThunk";
 import './loginModal.css'
+import { toast } from 'react-toastify';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -19,10 +20,15 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     
 
     const handleSubmit = async (e: React.SubmitEvent) => { 
-        e.preventDefault();
-        const result = await dispatch(fetchUsuario({ email, senha: password }))
-        if (fetchUsuario.fulfilled.match(result)) 
-            nav("/lutadores")
+    e.preventDefault();
+    const result = await dispatch(fetchUsuario({ email, senha: password }));
+    console.log(result)
+    if (fetchUsuario.fulfilled.match(result)) {
+        toast.success(result.payload.mensagem);
+        setTimeout(() => nav("/lutadores"), 1000);
+    } else {
+        toast.error(result.payload as string);
+    }
     };
 
     if (!isOpen) return null;

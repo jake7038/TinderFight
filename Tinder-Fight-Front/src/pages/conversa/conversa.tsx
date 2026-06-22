@@ -37,7 +37,9 @@ function Conversa({ onOpenChat }: ConversaProps) {
 
 
     useEffect(() => {
+        if (usuario) {
         dispatch(getConversas())
+        }
     }, [usuario, dispatch])    
     
     

@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react'
 import { criarConversa } from '../../redux/requisicoes/conversasThunk'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
-import { logout } from '../../redux/slices/usuarioSlice'
+import { resetStore } from '../../redux/actions'
 
 export function Principal() {
     const dispatch = useAppDispatch()
@@ -33,8 +33,9 @@ export function Principal() {
     const closeModal = () => setIsModalOpen(false)
 
     const Gologout = () => {
-        dispatch(logout())
         nav("/")
+        localStorage.removeItem('token')
+        dispatch(resetStore())
     }
 
     useEffect(() => {

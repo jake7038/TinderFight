@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { Preferencia } from '../../tipos/preferenciaTipo'
 import { RootState } from '../store'
 import { getPreferencias, criarPreferencia, atualizarPreferencia } from '../requisicoes/preferenciaThunk'
+import { resetStore } from '../actions'
 
 interface PreferenciaState {
     preferencia: Preferencia | null
@@ -62,6 +63,7 @@ const preferenciaSlice = createSlice({
                 state.status = 'failed'
                 state.erro = action.payload ?? 'Erro desconhecido.'
             })
+            .addCase(resetStore, () => initialState)
     }
 })
 

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useAppDispatch } from "../../redux/hookers";
 import { criarUsuario } from "../../redux/requisicoes/usuarioThunk";
 import './cadastraModal.css'
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 interface CadastraModalProps {
     isOpen: boolean;
@@ -17,12 +19,20 @@ const CadastraModal: React.FC<CadastraModalProps> = ({
 
     
     const dispatch = useAppDispatch()
-
+    const nav = useNavigate()
     
-    const handleSubmit = (e: React.SubmitEvent) => { 
-        e.preventDefault();
-        dispatch(criarUsuario({ email, senha}))
-    };
+    
+    const handleSubmit = async (e: React.SubmitEvent) => { 
+    e.preventDefault();
+    const result = await dispatch(criarUsuario({ email, senha }));
+
+    if (criarUsuario.fulfilled.match(result)) {
+        toast.success("Cadastro realizado com sucesso!");
+        setTimeout(() => nav("/lutadores"), 1000);
+    } else {
+        toast.error(result.payload as string);
+    }
+};
 
 
     

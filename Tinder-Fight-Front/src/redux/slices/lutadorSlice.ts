@@ -2,6 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { Lutador } from '../../tipos/lutadorTipo'
 import { RootState } from '../store'
 import { fetchLutadores, criarLutador, atualizarLutador, deletarLutador } from '../requisicoes/lutadorThunk'
+import { resetStore } from '../actions'
 
 const lutadoresAdapter = createEntityAdapter<Lutador, string>({
     selectId: (lutador) => lutador.id_lutador
@@ -35,6 +36,7 @@ const lutadorSlice = createSlice({
     .addCase(deletarLutador.fulfilled, (state, action) => {
         lutadoresAdapter.removeOne(state, action.payload)
     })
+    .addCase(resetStore, () => initialState)
 }
 })
 

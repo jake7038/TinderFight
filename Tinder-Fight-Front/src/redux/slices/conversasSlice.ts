@@ -2,6 +2,7 @@ import { createSlice, createEntityAdapter } from '@reduxjs/toolkit'
 import { Conversas } from '../../tipos/conversasTipo'
 import { RootState } from '../store'
 import { getConversas, criarConversa, deletarConversa } from '../requisicoes/conversasThunk'
+import { resetStore } from '../actions'
 
 const conversasAdapter = createEntityAdapter<Conversas, string>({
     selectId: (c) => c.id,
@@ -31,6 +32,7 @@ const conversasSlice = createSlice({
         .addCase(deletarConversa.fulfilled, (state, action) => {
             conversasAdapter.removeOne(state, action.payload)
         })
+        .addCase(resetStore, () => initialState)
 }
 })
 

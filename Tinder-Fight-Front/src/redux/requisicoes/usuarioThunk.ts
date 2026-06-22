@@ -3,29 +3,37 @@ import { Usuario } from '../../tipos/usuarioTipo'
 
 const API_URL = import.meta.env.VITE_SERVER
 
-export const fetchUsuario = createAsyncThunk <string, { email: string; senha: string },{ rejectValue: string } >(
+interface LoginResponse {
+    mensagem: string
+    usuario: Usuario
+}
+
+export const fetchUsuario = createAsyncThunk<
+    LoginResponse,
+    { email: string; senha: string },
+    { rejectValue: string }
+>(
     'usuario/fetchUsuario',
-    async ({ email, senha }: { email: string; senha: string }, { rejectWithValue  }) => {
+    async ({ email, senha }, { rejectWithValue }) => {
         const res = await fetch(`${API_URL}/login`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email, senha })
         })
-
         const data = await res.json()
-
+        console.log('data do back:', data) 
         if (!res.ok) {
-            return rejectWithValue (data.mensagem ?? 'Erro ao fazer login.')
+            return rejectWithValue(data.mensagem ?? 'Erro ao fazer login.')
         }
 
         localStorage.setItem('token', data.token)
-        return data.token
+        return { mensagem: data.mensagem, usuario: data.usuario }
     }
 )
 
 export const criarUsuario = createAsyncThunk<
     Usuario,
-    Omit<Usuario, 'id'>,
+    { email: string; senha: string },
     { rejectValue: string }
 >(
     'usuario/criarUsuario',
@@ -35,15 +43,10 @@ export const criarUsuario = createAsyncThunk<
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(novoUsuario)
         })
-
         const data: Usuario & { mensagem?: string } = await res.json()
-
         if (!res.ok) {
-            return rejectWithValue(
-                data.mensagem ?? 'Erro ao criar usuário.'
-            )
+            return rejectWithValue(data.mensagem ?? 'Erro ao criar usuário.')
         }
-
         return data
     }
 )

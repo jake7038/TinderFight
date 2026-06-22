@@ -3,6 +3,7 @@ import CadastraModal from '../../modal/cadastraModal/cadastraModal'
 import { useState } from 'react'
 import './login.css'
 
+
 export function Login(){
     const [showLoginModal, setShowLoginModal] = useState(false);
     const [showCadastraModal, setShowCadastraModal] = useState(false);
