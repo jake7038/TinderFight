@@ -12,9 +12,6 @@ import { DesktopLayout } from './pages/DesktopLayout/DesktopLayout'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function useIsDesktop() {
-    return window.innerWidth >= 900
-}
 
 createRoot(document.getElementById('root')).render(
     <StrictMode>
@@ -22,20 +19,11 @@ createRoot(document.getElementById('root')).render(
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
-                    <Route path="/lutadores" element={
-                        window.innerWidth >= 900 ? <DesktopLayout /> : <Principal />
-                    } />
-                    <Route path="/conversas" element={
-                        window.innerWidth >= 900 ? <DesktopLayout /> : <Conversa />
-                    } />
+                    <Route path="/lutadores" element={<DesktopLayout />} />
+                    <Route path="/conversas" element={<DesktopLayout initialTab="conversas" />} />
                     <Route path="/chat" element={<Chat />} />
-                
                 </Routes>
-                <ToastContainer
-                        position="top-center"
-                        autoClose={3000}
-                        theme="dark"
-                    />
+                <ToastContainer position="top-center" autoClose={3000} theme="dark" />
             </BrowserRouter>
         </Provider>
     </StrictMode>
