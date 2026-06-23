@@ -1,18 +1,35 @@
 const bcrypt = require("bcrypt");
 const database = require("../database/export");
+const jwt = require("jsonwebtoken");
 
 const TABLE = "usuarios";
 
 async function criarUsuario({ email, senha }) {
-  const usuarioExistente = await database(TABLE).where({ email }).first();
-  if (usuarioExistente) {
-    const erro = new Error("E-mail ja cadastrado.");
-    erro.status = 409;
-    throw erro;
-  }
+    const usuarioExistente = await database(TABLE).where({ email }).first();
+    if (usuarioExistente) {
+        const erro = new Error("E-mail ja cadastrado.");
+        erro.status = 409;
+        throw erro;
+    }
 
     const senhaHash = await bcrypt.hash(senha, 10);
     await database(TABLE).insert({ email, senha: senhaHash });
+
+    const novoUsuario = await database(TABLE).where({ email }).first();
+
+    const token = jwt.sign(
+        { id: novoUsuario.id_usuario },
+        process.env.JWT_SECRET,
+        { expiresIn: "7d" }
+    );
+
+    const { senha: _, ...usuarioSemSenha } = novoUsuario;
+
+    return {
+        mensagem: "Cadastro realizado com sucesso!",
+        token,
+        usuario: usuarioSemSenha
+    };
 }
 
 async function buscarUsuario(id_usuario) {

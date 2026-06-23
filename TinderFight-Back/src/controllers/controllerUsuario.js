@@ -14,8 +14,8 @@ async function criarcontrollerUsuario(req, res) {
   }
 
   try {
-    await criarUsuario({ email, senha });
-    return res.status(201).json({ mensagem: "Usuario criado com sucesso." });
+    const user = await criarUsuario({ email, senha });
+    return res.status(201).json(user);
   } catch (error) {
     return res.status(error.status ?? 500).json({ mensagem: error.message });
   }
