@@ -10,17 +10,21 @@ import "./principal.css"
 import { resetStore } from '../../redux/actions'
 import { toast } from 'react-toastify'
 
-export function Principal() {
+interface PrincipalProps {
+    onGoConversas?: () => void
+}
+
+export function Principal({ onGoConversas }: PrincipalProps) {
     const dispatch = useAppDispatch()
     const nav = useNavigate()
     const usuario = useAppSelector(state => state.usuario)
 
-    const goConversas = () => nav("/conversas")
+    const goConversas = () => onGoConversas ? onGoConversas() : nav("/conversas")
 
     const lutadores = useAppSelector(state =>
-    lutadoresSelectors.selectAll(state).filter(
-        l => l.id_usuario !== usuario?.id_usuario
-    )
+        lutadoresSelectors.selectAll(state).filter(
+            l => l.id_usuario !== usuario?.id_usuario
+        )
     )
 
     const next = () => {
