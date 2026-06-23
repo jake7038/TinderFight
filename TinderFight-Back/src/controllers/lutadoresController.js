@@ -24,7 +24,7 @@ async function listarLutadoresController(req, res) {
     return res.status(200).json(listaLutadores);
   } catch (error) {
     console.error("Erro no Controller de lutadores (listar lutadores):", error);
-    return res.status(500).json({ mensagem: error.message });
+    return res.status(error.status).json({ mensagem: error.message });
   }
 }
 
