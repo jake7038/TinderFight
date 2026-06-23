@@ -70,10 +70,15 @@
     width: 100%;
     padding: 8px 12px;
     border-radius: 8px;
-    background: var(--input-bg);
-    color: var(--text);
-    border: 1px solid var(--border);
+    background: #1a1a1a;
+    color: #dddddd;
+    border: 1px solid #2a2a2a;
     margin-top: 4px;
+}
+
+.sm-select option {
+    background: #1a1a1a;
+    color: #dddddd;
 }
 
 .sm-select:disabled {

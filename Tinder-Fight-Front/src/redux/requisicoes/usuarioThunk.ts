@@ -32,7 +32,7 @@ export const fetchUsuario = createAsyncThunk<
 )
 
 export const criarUsuario = createAsyncThunk<
-    Usuario,
+    LoginResponse,
     { email: string; senha: string },
     { rejectValue: string }
 >(
@@ -43,11 +43,12 @@ export const criarUsuario = createAsyncThunk<
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(novoUsuario)
         })
-        const data: Usuario & { mensagem?: string } = await res.json()
+        const data = await res.json()
         if (!res.ok) {
             return rejectWithValue(data.mensagem ?? 'Erro ao criar usuário.')
         }
-        return data
+        localStorage.setItem('token', data.token)
+        return { mensagem: data.mensagem, usuario: data.usuario }
     }
 )
 

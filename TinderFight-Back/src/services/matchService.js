@@ -4,14 +4,12 @@ const TABLE = "fight";
 const TABLE_CONVERSA = "conversa";
 
 async function darLike(idUsuarioLogado, idUsuarioAlvo) {
-  // Verifica se o alvo já deu like no usuário logado antes
   const likeInvertido = await database(TABLE)
     .where("id_usuario1", idUsuarioAlvo)
     .andWhere("id_usuario2", idUsuarioLogado)
     .first();
 
   if (likeInvertido) {
-    // Já existe like do alvo — é um match! cria a conversa
     const conversaExistente = await database(TABLE_CONVERSA)
       .where(function () {
         this.where("id_usuario1", idUsuarioAlvo).andWhere(
@@ -37,7 +35,6 @@ async function darLike(idUsuarioLogado, idUsuarioAlvo) {
     return { match: true };
   }
 
-  // Verifica se o usuário logado já deu like antes (evita duplicata)
   const likeJaExiste = await database(TABLE)
     .where("id_usuario1", idUsuarioLogado)
     .andWhere("id_usuario2", idUsuarioAlvo)

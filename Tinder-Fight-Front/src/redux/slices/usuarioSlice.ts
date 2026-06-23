@@ -32,7 +32,7 @@ const usuarioSlice = createSlice({
         })
 
         .addCase(criarUsuario.fulfilled, (state, action) => {
-            return action.payload
+            return action.payload.usuario
         })
 
         .addCase(deletarUsuario.fulfilled, (state, action) => {

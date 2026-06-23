@@ -45,28 +45,38 @@ async function criarLutadorService(dados) {
 
 
 async function listarLutadoresService(idUsuario) {
-  try {
-    const preferencia = await database("preferencias")
-      .where("id_usuario", idUsuario)
-      .first();
+    try {
+        const preferencia = await database("preferencias")
+            .where("id_usuario", idUsuario)
+            .first();
 
-    if (!preferencia) {
-      throw new Error("Preferências do usuário não encontradas.");
+        if (!preferencia) {
+            const erro = new Error("Preferências do usuário não encontradas.");
+            erro.status = 404;
+            throw erro;
+        }
+
+        const { peso, modalidades } = preferencia;
+
+        const lutadoresFiltrados = database(TABLE)
+            .select("*")
+            .where("peso", "<=", peso)
+            .whereRaw("modalidades \\?| ?::text[]", [modalidades]);
+
+        const lutadorDoUsuario = database(TABLE)
+            .select("*")
+            .where("id_usuario", idUsuario);
+
+        const lutadores = await lutadoresFiltrados.union(lutadorDoUsuario);
+        return lutadores;
+
+    } catch (error) {
+        if (error.status) throw error;
+        console.error("Erro ao ler os lutadores: ", error);
+        const erro = new Error("Não foi possível buscar os lutadores na base de dados.");
+        erro.status = 500;
+        throw erro;
     }
-
-    const { peso, modalidades } = preferencia;
-
-    const lutadores = await database(TABLE)
-      .select("*")
-      .whereNot("id_usuario", idUsuario)
-      .where("peso", "<=", peso)
-      .whereRaw("modalidades \\?| ?::text[]", [modalidades]);
-
-    return lutadores;
-  } catch (error) {
-    console.error("Erro ao ler os lutadores: ", error);
-    throw new Error("Não foi possível buscar os lutadores na base de dados.");
-  }
 }
 
 async function atualizarLutadorService(idLutador, dados) {

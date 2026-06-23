@@ -28,7 +28,7 @@ export const getPreferencias = createAsyncThunk<
             return rejectWithValue(data.mensagem ?? 'Erro ao buscar preferências.')
         }
 
-        return data as Preferencia
+        return data[0] ?? null
     }
 )
 

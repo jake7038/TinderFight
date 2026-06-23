@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../redux/hookers";
 import { atualizarUsuario, deletarUsuario } from "../../redux/requisicoes/usuarioThunk";
-import { criarLutador, deletarLutador } from "../../redux/requisicoes/lutadorThunk";
+import { criarLutador, deletarLutador, fetchLutadores } from "../../redux/requisicoes/lutadorThunk";
 import { criarPreferencia, atualizarPreferencia } from "../../redux/requisicoes/preferenciaThunk";
 import { selecionarPreferencia } from "../../redux/slices/preferenciaSlice";
 import { useNavigate } from "react-router-dom";
 import { Usuario } from "../../tipos/usuarioTipo";
 import { Lutador } from "../../tipos/lutadorTipo";
 import "./userModal.css";
+import { lutadoresSelectors } from "../../redux/slices/lutadorSlice";
 
 type Tab = "profile" | "fighters";
 type Estado = "RJ" | "SP" | ""
@@ -115,6 +116,25 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
 
     const [fighterPrefs, setFighterPrefs] = useState<FighterPreferences>(DEFAULT_FIGHTER_PREFS);
 
+    const lutadorDoUsuario = useAppSelector(state =>
+    lutadoresSelectors.selectAll(state).find(
+        l => l.id_usuario === usuario?.id_usuario
+    )
+    )
+
+    useEffect(() => {
+        if (lutadorDoUsuario) {
+            setUserPrefs({
+                nome: lutadorDoUsuario.nome,
+                img: lutadorDoUsuario.img,
+                cidade: lutadorDoUsuario.cidade,
+                estado: lutadorDoUsuario.estado,
+                peso: lutadorDoUsuario.peso,
+                modalidades: lutadorDoUsuario.modalidades,
+            })
+        }
+        }, [lutadorDoUsuario])
+        
     useEffect(() => {
         if (usuario) {
             setUser({ email: usuario.email, senha: usuario.senha });
@@ -185,12 +205,16 @@ const UserModal = ({ isOpen, onClose }: SettingsModalProps) => {
 
         if (preferenciaExistente) {
             dispatch(atualizarPreferencia(dadosPreferencia));
+            dispatch(fetchLutadores())
         } else {
             dispatch(criarPreferencia(dadosPreferencia));
+            dispatch(fetchLutadores())
         }
 
         onClose();
     };
+
+    
 
     return (
         <div className="sm-overlay" onClick={onClose}>

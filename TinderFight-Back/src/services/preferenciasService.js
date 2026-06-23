@@ -26,10 +26,10 @@ async function criarPreferenciaService(dados) {
   }
 }
 
-async function listarPreferenciasService(idPreferencia) {
+async function listarPreferenciasService(id_preferencia) {
   try {
     const preferencias = await database(TABLE)
-      .where("id_preferencia", idPreferencia)
+      .where("id_usuario", id_preferencia)
       .select("*");
 
     return preferencias;

@@ -2,11 +2,13 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from "../../redux/hookers"
 import { lutadoresSelectors, removerLutador } from "../../redux/slices/lutadorSlice"
 import { fetchLutadores } from '../../redux/requisicoes/lutadorThunk'
-import { useState, useEffect } from 'react'
+import { getPreferencias } from '../../redux/requisicoes/preferenciaThunk'
+import { useState, useEffect, useRef } from 'react'
 import { criarConversa } from '../../redux/requisicoes/conversasThunk'
 import UserModal from '../../modal/userModal/userModal'
 import "./principal.css"
 import { resetStore } from '../../redux/actions'
+import { toast } from 'react-toastify'
 
 export function Principal() {
     const dispatch = useAppDispatch()
@@ -15,7 +17,11 @@ export function Principal() {
 
     const goConversas = () => nav("/conversas")
 
-    const lutadores = useAppSelector(lutadoresSelectors.selectAll)
+    const lutadores = useAppSelector(state =>
+    lutadoresSelectors.selectAll(state).filter(
+        l => l.id_usuario !== usuario?.id_usuario
+    )
+    )
 
     const next = () => {
         if (!lutadores[0]) return
@@ -38,8 +44,16 @@ export function Principal() {
         dispatch(resetStore())
     }
 
+    const toastShown = useRef(false)
+
     useEffect(() => {
         dispatch(fetchLutadores())
+        dispatch(getPreferencias()).then((result) => {
+            if (getPreferencias.fulfilled.match(result) && !result.payload && !toastShown.current) {
+                toastShown.current = true
+                toast.warn("Configure suas preferências para encontrar lutadores!")
+            }
+        })
     }, [dispatch])
 
     return (
