@@ -56,11 +56,12 @@ async function listarLutadoresService(idUsuario) {
             throw erro;
         }
 
-        const { peso, modalidades } = preferencia;
+        const { peso, modalidades, estado } = preferencia;
 
         const lutadoresFiltrados = database(TABLE)
             .select("*")
             .where("peso", "<=", peso)
+            .where("estado", "=",estado )
             .whereRaw("modalidades \\?| ?::text[]", [modalidades]);
 
         const lutadorDoUsuario = database(TABLE)
